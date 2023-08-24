@@ -1,0 +1,1 @@
+export const nav = ["About", "Services", "Career", "Gallery", "Contacts"];

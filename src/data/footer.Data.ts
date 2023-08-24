@@ -1,0 +1,19 @@
+export const socialMedia = [
+    {
+    name: "facebook",
+    link:"https://uk-ua.facebook.com/"
+},
+{
+    name: "instagram",
+    link:"https://www.instagram.com/"
+},
+{
+    name: "youtube",
+    link:"https://www.youtube.com/"
+},
+{
+    name: "tiktok",
+    link:"https://www.tiktok.com/"
+},
+
+]

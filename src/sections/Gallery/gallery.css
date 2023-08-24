@@ -1,0 +1,123 @@
+.gallery_gradient {
+  position: absolute;
+  left: 0;
+  height: 247px;
+  width: 100vw;
+  z-index: 0;
+  opacity: 0.75;
+  
+}
+
+.gallery_up {
+  background: linear-gradient(180deg, #001826 0%, rgba(0, 37, 49, 0) 100%);
+  top: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .gallery_gradient {
+    height: 247px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .gallery_gradient {
+    height: 302.7px;
+  }
+}
+
+.gallery_down {
+   background: linear-gradient(to top 180deg, #001826 0%, rgba(0, 37, 49, 0) 100%);
+  
+  bottom: 0;
+}
+
+.section_gallery {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url(/images/gallery/background-mob.jpg);
+
+  @media (min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
+    background-image: url(/images/gallery/background-mob-2x.jpg);
+  }
+
+  @media screen and (min-width: 768px) {
+    background-image: url(/images/gallery/background-tab.jpg);
+
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
+      background-image: url(/images/gallery/background-tab-2x.jpg);
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    background-image: url(/images/gallery/background-desk.jpg);
+
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
+      background-image: url(/images/gallery/background-desk-2x.jpg);
+    }
+  }
+  background-color: rgba(2, 15, 8, 0.5);
+}
+
+.section_gallery .swiper-wrapper {
+  align-items: center;
+}
+
+.section_gallery .swiper-slide-active {
+  flex-basis: 415px;
+}
+.section_gallery .swiper-slide-next {
+  flex-basis: 121px;
+}
+.section_gallery .swiper-slide-prev {
+  flex-basis: 121px;
+}
+
+.active_image {
+  width: 415px;
+  height: 294px;
+  z-index: 0;
+}
+
+.not_active_image {
+  width: 121px;
+  height: 87px;
+}
+
+.not_active_image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: rgba(2, 15, 8, 0.75);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (min-width: 1280px) {
+  .section_gallery .swiper-slide-active {
+    flex-basis: 606px;
+  }
+  .section_gallery .swiper-slide-next {
+    flex-basis: 313px;
+  }
+  .section_gallery .swiper-slide-prev {
+    flex-basis: 313px;
+  }
+
+  .active_image {
+    width: 606px;
+    height: 429px;
+  }
+
+  .not_active_image {
+    width: 313px;
+    height: 225px;
+  }
+}

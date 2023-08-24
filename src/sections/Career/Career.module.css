@@ -1,0 +1,134 @@
+.career_gradient{
+    position: absolute;
+    left: 0;
+    height: 247px;
+    width: 100vw;
+    z-index: 0;
+    opacity: 0.75;
+
+  }
+  
+  .career_up {
+    background: linear-gradient( 180deg, #001826 0%, rgba(0, 37, 49, 0) 100%);
+    top: 0;
+  }
+  
+
+  @media screen and (min-width: 1280px) {
+    .career_gradient {
+      height: 257.3px;
+    }
+  }
+  
+  .career_down{
+    background: linear-gradient(to top 180deg, #001826 0%, rgba(0, 37, 49, 0) 100%);
+  bottom:0;
+  }
+  
+  .section_career {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url(/images/career/background-mob.jpg);
+  
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
+      background-image: url(/images/career/background-mob-2x.jpg);
+    }
+
+    @media screen and (min-width: 480px) {
+        background-image: url(/images/career/background-mob-480.jpg);
+    
+        @media (min-device-pixel-ratio: 2),
+          (min-resolution: 192dpi),
+          (min-resolution: 2dppx) {
+          background-image: url(/images/career/background-mob-480-2x.jpg);
+        }
+      }
+  
+    @media screen and (min-width: 768px) {
+      background-image: url(/images/career/background-tab.jpg);
+  
+      @media (min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi),
+        (min-resolution: 2dppx) {
+        background-image: url(/images/career/background-tab-2x.jpg);
+      }
+    }
+    @media screen and (min-width: 1280px) {
+      background-image: url(/images/career/background-desk.jpg);
+  
+      @media (min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi),
+        (min-resolution: 2dppx) {
+        background-image: url(/images/career/background-desk-2x.jpg);
+      }
+    }
+    background-color: rgba(2, 15, 8, 0.50); 
+  }
+  
+
+  .error_career::before {
+    content: "";
+    background-image: url(/images/career/error.svg);
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top:50%;
+    transform: translate(0,-50%);
+    width: 18px;
+    height: 18px;
+   
+  }
+  
+  .checkbox_career:focus-visible + label {
+    outline: auto;
+  }
+  
+
+
+  .checkbox_career+ label:before {
+    content: "";
+    background-image: url(/images/career/unchecked.svg);
+    position: absolute;
+    z-index: 10;
+    left:-29px;
+    top:-2px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  
+  }
+
+ 
+  .checkbox_career:not(:checked),
+  .checkbox_career:checked {
+  position: relative;
+  left: 0;
+  opacity: 0;
+  z-index: -1;
+  }
+
+ 
+
+  .checkbox_career:not(:checked) + label,
+  .checkbox_career:checked + label {
+  position: relative;
+  cursor: pointer;
+  }
+
+.checkbox_career:checked+label:before {
+  content: "";
+  background-image: url(/images/career/checked.svg);
+  position: absolute;
+  z-index: 10;
+  left: -28px;
+  top:-1px;
+  width: 22px;
+  height: 22px;
+}
+  
+  
+  
+  

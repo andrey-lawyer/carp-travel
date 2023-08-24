@@ -5,18 +5,19 @@ import { Nav } from "@/components/Nav";
 
 export const Header = () => {
   return (
-    <header className="absolute  w-screen pt-9 z-10">
+   <header className="absolute  w-screen pt-9 z-10">
       <Container>
         <div className="flex justify-between  align-middle ">
-          <Image
-            src="/images/logo.svg"
-            alt="logo"
-            className=""
-            width={61}
-            height={35}
-            priority
-          />
-
+          <a href="https://uk-ua.facebook.com/">
+            <Image
+              src="/images/logo.svg"
+              alt="logo"
+              className=""
+              width={61}
+              height={35}
+              priority
+            />
+          </a>
           <Nav />
         </div>
       </Container>

@@ -1,13 +1,15 @@
 import { Container } from "@/components/Container";
 import { FormCareer } from "@/components/FormCareer";
-import { socialMedia } from "@/data/footer.Data";
+
+import data from "@/data/footerData.json";
 
 import s from "./Footer.module.css";
 
 export const Footer = () => {
   return (
     <>
-      <footer  id="section_5"
+      <footer
+        id="section_5"
         className={`${s.footer} relative z-10 pt-14 pb-[54px]  tab:py-[64px]  desk:py-[104px]  `}
       >
         <div className={`${s.footer_gradient}   ${s.footer_up} `}></div>
@@ -25,6 +27,8 @@ export const Footer = () => {
                     <li className="">
                       <a
                         href="tel:+380981234567"
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
                         className="text-sm_mob_footer tab:text-base_desk_place desk:text-lg"
                       >
                         +38 (098) 12 34 567
@@ -33,6 +37,8 @@ export const Footer = () => {
                     <li>
                       <a
                         href="tel:+380731234567"
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
                         className="text-sm_mob_footer tab:text-base_desk_place desk:text-lg"
                       >
                         +38 (073) 12 34 567
@@ -46,6 +52,8 @@ export const Footer = () => {
                 <div className="flex gap-5 justify-end mb-[26px] desk:mb-[124px]">
                   <a
                     href="mailto:support@carptravel.com"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
                     className="text-sm_mob_footer tab:text-base_desk_place desk:text-lg"
                   >
                     support@carptravel.com
@@ -56,15 +64,17 @@ export const Footer = () => {
                 </div>
               </address>
               <div className="relative z-10 text-text-white flex gap-5 justify-end mb-3 desk:flex-row-reverse desk:justify-start ">
-                <p className="text-xs_chose_us font-extralight desk:text-xs_slogan desk:w-[81px]">Follow us</p>
+                <p className="text-xs_chose_us font-extralight desk:text-xs_slogan desk:w-[81px]">
+                  Follow us
+                </p>
                 <ul>
-                  {socialMedia.map(({ name, link }, ind) => (
+                  {data.socialMedia.map(({ name, link }, ind) => (
                     <li key={ind}>
                       <a
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer nofollow"
                         href={link}
-                        className="hover:underline block w-[81px] text-sm_mob_footer tab:text-base_desk_place desk:text-lg"
+                        className="hover:underline focus:underline transition delay-300 ease-[cubic-bezier(0.4,0,0.2,1)] block w-[81px] text-sm_mob_footer tab:text-base_desk_place desk:text-lg"
                       >
                         {name}
                       </a>

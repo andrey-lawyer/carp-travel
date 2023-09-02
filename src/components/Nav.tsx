@@ -10,18 +10,17 @@ const MediaQuery = dynamic(() => import("react-responsive"), {
 
 import { Portal } from "./Portal";
 import { ModalMenu } from "./ModalMenu";
-import { nav } from "@/data/nav";
+import nav from "@/data/nav.json";
 
 export function Nav() {
   const [showModal, setShowModal] = useState(false);
-
   return (
     <>
       <MediaQuery maxWidth={767.9}>
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="bg-transparent text-text-white text-button-font "
+          className="  bg-transparent text-text-white text-button-font "
         >
           MENU
         </button>
@@ -34,16 +33,17 @@ export function Nav() {
       <MediaQuery minWidth={768}>
         <nav>
           <ul className="flex gap-6 desk:gap-14">
-            {nav.map((item, ind) => (
+            {nav.nav.map((item, ind) => (
               <li key={ind}>
                 <Link
+                  href="/"
                   activeClass="active"
                   to={`section_${ind + 1}`}
                   spy={true}
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className="bg-transparent text-text-white text-button-font cursor-pointer"
+                  className="bg-transparent text-text-white text-button-font cursor-pointer   "
                 >
                   {item}
                 </Link>

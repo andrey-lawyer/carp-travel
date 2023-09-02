@@ -7,3 +7,11 @@ export interface FormData {
     flag?:boolean;
   }
 
+  export interface IForm {
+    name?: string;
+    email?: string;
+    phone?: string;
+    position?: string;
+    message?: string;
+  }
+

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Link } from "react-scroll";
 
 import { Container } from "./Container";
-import { nav } from "@/data/nav";
+import nav from "@/data/nav.json";
 
 import { IModal } from "@/types/propsType";
 
@@ -20,11 +20,11 @@ export const ModalMenu: FC<IModal> = ({ setShowModal }) => {
         </button>
         <nav>
           <ul className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-12 items-center">
-            {nav.map((item, ind) => (
+            {nav.nav.map((item, ind) => (
               <li key={ind}>
                 <Link
                   activeClass="active"
-                  to={`section_${ind===2? 0: ind + 1}`}
+                  to={`section_${ind === 2 ? 0 : ind + 1}`}
                   spy={true}
                   smooth={true}
                   offset={50}
@@ -34,7 +34,6 @@ export const ModalMenu: FC<IModal> = ({ setShowModal }) => {
                 >
                   {item}
                 </Link>
-              
               </li>
             ))}
           </ul>

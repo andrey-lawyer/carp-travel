@@ -1,20 +1,49 @@
-This project was created for help [Next.js](https://nextjs.org/).
+# CarpTravel
 
-To learn more about Next.js, take a look at the following resources:
+## Project Description
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The "CarpTravel" project is a website aimed at helping travelers and vacationers discover a wide range of recreational and entertainment activities in the Carpathian Mountains.
+
+## Project Benefits
+
+- The website provides extensive information on various types of recreation in the Carpathians, including mountain hikes, tours, sports events, and more.
+- Users can find contact details of service providers and make online bookings for activities.
+- The site offers photos and reviews of places and events to assist users in choosing the best options for their leisure.
+
+## Technologies Used
+
+The project makes use of several key technologies and libraries:
+
+- **Next.js**: A React framework for building fast and powerful web applications.
+- **React-hook-form**: Used for form validation.
+- **Swiper**: Employed for creating visually appealing and user-friendly slides.
+- **react-scroll**: Facilitates smooth navigation through website sections.
+
+## Getting Started
+
+1. **Clone the repository:**
+git clone https://github.com/andrey-lawyer/carp-travel
+
+2. **Install dependencies:**
+cd carp-travel
+npm install
+
+3. **Run the project:**
+The project will be accessible at `http://localhost:3000`.
+
+## Getting Help
+If you have any questions or encounter issues with the project, you can seek assistance from the following sources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - for Next.js-related questions.
+- [React Documentation](https://reactjs.org/docs) - for React-related questions.
+- [Next.js Forum on Stack Overflow](https://stackoverflow.com/questions/tagged/next.js) - for community support.
 
 
-For smooth navigation through the sections, [`react-scroll`](https://www.npmjs.com/package/react-scroll) was used.
 
-[`React-hook-form`](https://react-hook-form.com/) was used for validation.
 
-[`Swiper`](https://swiperjs.com/) was used to validate work with slides.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out  [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 
 
 

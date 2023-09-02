@@ -3,7 +3,6 @@ import { ListChooseUs } from "./ListChooseUs";
 
 import s from "@/sections/Career/Career.module.css";
 
-
 export const ChooseUsMobile = () => {
   return (
     <section
@@ -24,8 +23,10 @@ export const ChooseUsMobile = () => {
             Seeking talented professionals to share our common mission.
           </span>
         </p>
-        <h3 className=" text-text-white mb-9 uppercase font-extralight text-xxl_mob_send pr-[39px] text-right">Why us ?</h3>
-       <ListChooseUs/>
+        <h3 className=" text-text-white mb-9 uppercase font-extralight text-xxl_mob_send pr-[39px] text-right">
+          Why us ?
+        </h3>
+        <ListChooseUs />
       </Container>
     </section>
   );

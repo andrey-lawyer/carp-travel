@@ -20,12 +20,12 @@ export const Career = () => {
         <ChooseUsMobile />
       </MediaQuery>
       <section
-         id="section_3"
+        id="section_3"
         className={`${s.section_career} relative z-10 py-14  tab:py-[64px]  desk:py-[104px]  `}
       >
-         <MediaQuery maxWidth={1279.9}>
-        <div className={`${s.career_gradient}   ${s.career_up} `}></div>
-        <div className={`${s.career_gradient}  ${s.career_down} `}></div>
+        <MediaQuery maxWidth={1279.9}>
+          <div className={`${s.career_gradient}   ${s.career_up} `}></div>
+          <div className={`${s.career_gradient}  ${s.career_down} `}></div>
         </MediaQuery>
         <Container>
           <MediaQuery maxWidth={767.9}>
@@ -44,17 +44,17 @@ export const Career = () => {
               </p>
             </div>
             <div className="flex">
-            <h3 className="relative z-10 text-text-white mb-3 tab:mb-[56px] uppercase font-extralight text-xxl_mob_send desk:text-xxl_desk_career pl-[80px] desk:pl-[115px]  ">
-              Why us ?
-            </h3>
-            <MediaQuery minWidth={1280}>
-              <p className=" relative z-10 text-text-white w-[234px] text-lg font-extralight ml-[342px]">
-                {"Don't miss your opportunity!"}{" "}
-                <span className="block">
-                  Fill out the form right now and join our team!
-                </span>
-              </p>
-            </MediaQuery>
+              <h3 className="relative z-10 text-text-white mb-3 tab:mb-[56px] uppercase font-extralight text-xxl_mob_send desk:text-xxl_desk_career pl-[80px] desk:pl-[115px]  ">
+                Why us ?
+              </h3>
+              <MediaQuery minWidth={1280}>
+                <p className=" relative z-10 text-text-white w-[234px] text-lg font-extralight ml-[342px]">
+                  {"Don't miss your opportunity!"}{" "}
+                  <span className="block">
+                    Fill out the form right now and join our team!
+                  </span>
+                </p>
+              </MediaQuery>
             </div>
           </MediaQuery>
 

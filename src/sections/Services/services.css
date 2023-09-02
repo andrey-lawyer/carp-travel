@@ -1,14 +1,13 @@
-
-.services_gradient{
+.services_gradient {
   position: absolute;
-   left: 0;
-  
+  left: 0;
+
   height: 291px;
   width: 100vw;
   opacity: 0.75;
-  
+
   z-index: 0;
-  }
+}
 @media screen and (min-width: 768px) {
   .services_gradient {
     height: 247px;
@@ -23,13 +22,15 @@
 .services_up {
   background: linear-gradient(180deg, #001826 0%, rgba(0, 37, 49, 0) 100%);
   top: 0;
-  
 }
 .services_down {
-  background: linear-gradient(to top 180deg, #001826 0%, rgba(0, 37, 49, 0) 100%);
+  background: linear-gradient(
+    to top 180deg,
+    #001826 0%,
+    rgba(0, 37, 49, 0) 100%
+  );
   bottom: 0;
 }
-
 
 @media screen and (min-width: 768px) {
   .services_up {
@@ -49,17 +50,16 @@
 }
 
 @media screen and (min-width: 768px) {
-.swiper-pagination-bullets.swiper-pagination-horizontal {
- 
-  bottom: 184px;
-}
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: 184px;
+  }
 }
 
 @media screen and (min-width: 1280px) {
   .swiper-pagination-bullets.swiper-pagination-horizontal {
-       bottom: 160px;
+    bottom: 160px;
   }
-  }
+}
 .swiper-pagination {
   display: flex;
   gap: 16px;
@@ -71,7 +71,7 @@
   .swiper-pagination {
     gap: 24px;
   }
-  }
+}
 
 @media screen and (min-width: 480px) {
   .swiper-pagination {
@@ -82,18 +82,15 @@
 @media screen and (min-width: 768px) {
   .swiper-pagination {
     max-width: 768px;
-    /* padding-left: 32px; */
     padding-left: 512px;
     padding-right: 32px;
     padding-right: 0px;
   }
 }
 
-
 @media screen and (min-width: 1280px) {
   .swiper-pagination {
     max-width: 1280px;
-    /* padding-left: 104px; */
     padding-left: 650px;
     padding-right: 104px;
   }
@@ -116,48 +113,53 @@
   background: none;
 }
 
-
 @media screen and (min-width: 768px) {
   .swiper-pagination-bullet {
     font-size: 22px;
     line-height: 0.81818;
-      width: 230px;
+    width: 230px;
   }
-  
 }
 
+.swiper-pagination-bullet {
+  opacity: 0.5;
+  transition: opacity var(--animation);
+}
 
+.swiper-pagination-bullet:focus-visible {
+  outline: auto;
+}
 
+.swiper-pagination-bullet:hover,
+.swiper-pagination-bullet:focus {
+  opacity: 1;
+}
 
 @media screen and (min-width: 1280px) {
   .swiper-pagination-bullet {
     font-size: 28px;
     line-height: 0.85714;
-      width: 255px;
+    width: 255px;
   }
-  .slogan-1{
+  .slogan-1 {
     margin-top: 48px;
-
   }
-  .slogan-2{
+  .slogan-2 {
     margin-top: 96px;
-
   }
-  .slogan-3{
+  .slogan-3 {
     margin-top: 168px;
-
   }
-  .slogan-4{
+  .slogan-4 {
     margin-top: 216px;
-
   }
 }
 
 .swiper-pagination-bullet-active {
   font-weight: 500;
   padding-left: 16.48px;
+  opacity: 1;
 }
-
 
 .swiper-pagination-bullet-active::before {
   content: "";
@@ -170,12 +172,11 @@
   height: 9px;
 }
 
-
 .slider_common {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-color: rgba(2, 15, 8, 0.50); 
+  background-color: rgba(2, 15, 8, 0.5);
 }
 
 .slider_1 {

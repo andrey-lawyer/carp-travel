@@ -1,24 +1,22 @@
-.hero_up{
+.hero_up {
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
   height: 287px;
-  width:  100vw;
+  width: 100vw;
   opacity: 0.5;
-  background: linear-gradient(180deg, #001826 0%, rgba(0, 37, 49, 0.00) 100%);
+  background: linear-gradient(180deg, #001826 0%, rgba(0, 37, 49, 0) 100%);
   z-index: 0;
 }
 @media screen and (min-width: 768px) {
-  .hero_up{
+  .hero_up {
     height: 288.634px;
   }
 }
 @media screen and (min-width: 1280px) {
-  .hero_up{
+  .hero_up {
     height: 146px;
   }
-
- 
 }
 
 .section_hero {
@@ -53,9 +51,12 @@
       background-image: url(/images/hero/background-desk-2x.jpg);
     }
   }
-  background-color: rgba(2, 15, 8, 0.50); 
+  background-color: rgba(2, 15, 8, 0.5);
 }
 
+.button_hero {
+  transition: background-color var(--animation);
+}
 
 .button_hero::before {
   content: "";
@@ -79,7 +80,7 @@
 
 @media screen and (min-width: 768px) {
   .button_hero::before {
-     width: 35px;
+    width: 35px;
     height: 50px;
     background-image: url(/images/button/left-tab.svg);
   }
@@ -89,11 +90,7 @@
     position: absolute;
     width: 35px;
     height: 50px;
- 
-
-    
   }
-
 }
 
 @media screen and (min-width: 1280px) {
@@ -109,7 +106,4 @@
     width: 44px;
     height: 71px;
   }
-
 }
-
-

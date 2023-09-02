@@ -1,2 +1,0 @@
-export const galleryData = ["/images/slider-img/image1.jpg", "/images/slider-img/image2.jpg", "/images/slider-img/image3.jpg","/images/slider-img/image1.jpg", "/images/slider-img/image2.jpg", "/images/slider-img/image3.jpg",];
-export const galleryDataMob = ["/images/slider-img/image3.jpg", "/images/slider-img/image1.jpg", "/images/slider-img/image2.jpg"];

@@ -5,7 +5,6 @@
   width: 100vw;
   z-index: 0;
   opacity: 0.75;
-  
 }
 
 .gallery_up {
@@ -25,8 +24,12 @@
 }
 
 .gallery_down {
-   background: linear-gradient(to top 180deg, #001826 0%, rgba(0, 37, 49, 0) 100%);
-  
+  background: linear-gradient(
+    to top 180deg,
+    #001826 0%,
+    rgba(0, 37, 49, 0) 100%
+  );
+
   bottom: 0;
 }
 

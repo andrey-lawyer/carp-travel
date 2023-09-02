@@ -1,0 +1,15 @@
+{
+  "galleryData": [
+    {"url": "/images/slider-img/image1.jpg", "alt": "a lake"},
+    {"url": "/images/slider-img/image2.jpg", "alt": "scenery"},
+    {"url": "/images/slider-img/image2.jpg", "alt": "mountains"},
+    {"url": "/images/slider-img/image1.jpg", "alt": "a lake"},
+    {"url": "/images/slider-img/image2.jpg", "alt": "scenery"},
+    {"url": "/images/slider-img/image2.jpg", "alt": "mountains"}
+  ],
+  "galleryDataMob": [
+    {"url": "/images/slider-img/image1.jpg", "alt": "a lake"},
+    {"url": "/images/slider-img/image2.jpg", "alt": "scenery"},
+    {"url": "/images/slider-img/image2.jpg", "alt": "mountains"}
+  ]
+}

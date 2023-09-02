@@ -16,12 +16,15 @@ import s from "@/sections/Career/Career.module.css";
 
 export function FormCareer({ type = "career" }: ICareer) {
   const isShown = type === "career" ? true : false;
-  let infoStorage = isShown
-    ? localStorage.getItem(STORAGE_KEY_CAREER)
-    : localStorage.getItem(STORAGE_KEY_CONTACTS);
+
   const { register, errors, onSubmit, form, setForm } = useHookForms(isShown);
 
   useEffect(() => {
+    
+    let infoStorage = isShown
+    ? localStorage.getItem(STORAGE_KEY_CAREER)
+    : localStorage.getItem(STORAGE_KEY_CONTACTS);
+
     let infoStorageParse: IForm;
     setForm((prevState) => {
       if (infoStorage) {
@@ -34,7 +37,7 @@ export function FormCareer({ type = "career" }: ICareer) {
       }
       return prevState;
     });
-  }, [infoStorage, setForm]);
+  }, [isShown, setForm]);
 
   return (
     <>
@@ -77,10 +80,12 @@ export function FormCareer({ type = "career" }: ICareer) {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                     setForm((prevState) => {
                       const state = { ...prevState, name: e.target.value };
+                      if (typeof window !== 'undefined'){
                       const key = isShown
                         ? STORAGE_KEY_CAREER
                         : STORAGE_KEY_CONTACTS;
                       localStorage.setItem(key, JSON.stringify(state));
+                      }
 
                       return state;
                     });
@@ -128,10 +133,11 @@ export function FormCareer({ type = "career" }: ICareer) {
                     {
                       setForm((prevState) => {
                         const state = { ...prevState, email: e.target.value };
-                        const key = isShown
+                        if (typeof window !== 'undefined')
+                        {const key = isShown
                           ? STORAGE_KEY_CAREER
                           : STORAGE_KEY_CONTACTS;
-                        localStorage.setItem(key, JSON.stringify(state));
+                        localStorage.setItem(key, JSON.stringify(state));}
 
                         return state;
                       });
@@ -176,11 +182,12 @@ export function FormCareer({ type = "career" }: ICareer) {
                               ...prevState,
                               position: e.target.value,
                             };
-                            localStorage.setItem(
+                            if (typeof window !== 'undefined')
+                           {localStorage.setItem(
                               STORAGE_KEY_CAREER,
                               JSON.stringify(state)
                             );
-
+                           }
                             return state;
                           });
                         }
@@ -225,10 +232,12 @@ export function FormCareer({ type = "career" }: ICareer) {
                                 ...prevState,
                                 phone: e.target.value,
                               };
-                              localStorage.setItem(
+                              if (typeof window !== 'undefined')
+                             { localStorage.setItem(
                                 STORAGE_KEY_CAREER,
                                 JSON.stringify(state)
                               );
+                             }
 
                               return state;
                             });
@@ -278,10 +287,12 @@ export function FormCareer({ type = "career" }: ICareer) {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                     setForm((prevState) => {
                       const state = { ...prevState, message: e.target.value };
+                      if (typeof window !== 'undefined'){
                       const key = isShown
                         ? STORAGE_KEY_CAREER
                         : STORAGE_KEY_CONTACTS;
                       localStorage.setItem(key, JSON.stringify(state));
+                      }
 
                       return state;
                     });

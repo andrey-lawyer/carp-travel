@@ -10,8 +10,16 @@ import '@/styles/globals.css'
 const inter = Inter({ subsets: ['latin', ] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://carp-travel-three.vercel.app"),
   title: 'СarpTravel',
   description: 'СarpTravel site',
+  openGraph: {
+    title: "CarpTravel",
+    description: "СarpTravel site",
+    url: "https://carp-travel-three.vercel.app",
+    siteName: "СarpTravel",
+    type: "website",
+  },
 }
 
 export default function RootLayout({

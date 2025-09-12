@@ -11,7 +11,7 @@ on:
 
 jobs:
   vector-map:
-    runs-on: self-hosted  # можно поменять на ubuntu-latest
+    runs-on: ubuntu-latest  # стандартный GitHub runner
     steps:
       # 1. Клонируем репозиторий
       - name: Checkout repository

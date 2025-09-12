@@ -28,7 +28,7 @@ jobs:
       # 4. Запускаем скрипт, передавая номер Issue
       - name: Run GPT PR script
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           CHROMADB_HOST: ${{ secrets.CHROMADB_HOST }}
           CHROMADB_PORT: ${{ secrets.CHROMADB_PORT }}

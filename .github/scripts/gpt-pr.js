@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import OpenAI from "openai";
-import { CloudClient } from "chromadb"; // актуальный пакет
+import { ChromaClient } from "chromadb"; // локальный клиент
+import https from "https";
 
 const issueNumber = process.argv[2];
 
@@ -16,11 +17,15 @@ const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 // OpenAI
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// ChromaDB
-const chroma = new CloudClient({
-    host: process.env.CHROMADB_HOST,
-    port: parseInt(process.env.CHROMADB_PORT, 10),
-    token: process.env.CHROMADB_TOKEN ,
+// ChromaDB (локальный сервер)
+const chroma = new ChromaClient({
+    path: `http://${process.env.CHROMADB_HOST}:${process.env.CHROMADB_PORT}`,
+    fetchOptions: {
+        headers: {
+            Authorization: `Bearer ${process.env.CHROMADB_TOKEN}`,
+        },
+        agent: new https.Agent({ rejectUnauthorized: false }), // если нужен SSL
+    },
 });
 
 // Получаем Issue
@@ -35,7 +40,7 @@ async function getIssue() {
 
 // Поиск релевантного кода в ChromaDB
 async function searchCode(query) {
-    const collection = await chroma.collection("openai-crm-proxy"); // коллекция
+    const collection = await chroma.getCollection("openai-crm-proxy"); // коллекция
     const results = await collection.query({
         queryTexts: [query],
         nResults: 5,
@@ -77,11 +82,10 @@ async function createPR(branchName, prBody) {
         sha: mainRef.data.object.sha,
     });
 
-    // Для примера создаем README.md, можно заменить на реальные изменения
     await octokit.repos.createOrUpdateFileContents({
         owner,
         repo,
-        path: "README.md",
+        path: "README.md", // для примера, можно заменить на патч
         message: `AI PR for Issue #${issueNumber}`,
         content: Buffer.from(prBody).toString("base64"),
         branch: branchName,

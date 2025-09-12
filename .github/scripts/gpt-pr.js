@@ -36,38 +36,39 @@ async function getIssue() {
     return data;
 }
 
-/// Поиск релевантного кода в ChromaDB
+// Получаем эмбеддинг 1536 от OpenAI
+async function getEmbedding(text) {
+    const response = await openai.embeddings.create({
+        model: "text-embedding-3-small", // 1536
+        input: text,
+    });
+    return response.data[0].embedding;
+}
+
+// Поиск релевантного кода в ChromaDB
 async function searchCode(query) {
     const collection = await chroma.getCollection({ name: "openai-crm-proxy" });
 
-    // основной запрос
+    const embedding = await getEmbedding(query);
+
     const results = await collection.query({
-        queryTexts: [query],
+        queryEmbeddings: [embedding],
         nResults: 5,
+        include: ["documents", "metadatas", "distances"],
     });
 
     console.log("🔍 Результаты ChromaDB:");
     console.dir(results, { depth: null });
 
-    // дополнительная отладка
-    const checkResults = await collection.query({
-        queryTexts: ["navigation", "link", "header"],
-        nResults: 5,
-    });
-    console.log("🔎 Debug search (keywords):", JSON.stringify(checkResults, null, 2));
-
-    // возвращаем объекты {path, content}
     return results?.documents?.[0]?.map((doc, idx) => ({
         path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,
         content: doc,
     })) || [];
 }
 
-
-
 // Парсинг JSON из текста GPT
 function parseGPTJSON(text) {
-    const match = text.match(/\[.*\]/s); // ищем JSON массив в тексте
+    const match = text.match(/\[.*\]/s); // ищем JSON массив
     if (!match) return [];
     try {
         return JSON.parse(match[0]);
@@ -165,15 +166,16 @@ async function main() {
     const issue = await getIssue();
     const relevantFiles = await searchCode(issue.title);
     const changes = await generateChanges(issue, relevantFiles);
+
     if (changes.length === 0) {
         console.log("GPT не предложил изменений для файлов.");
         return;
     }
+
     const branchName = `ai-issue-${issueNumber}`;
     await createPR(branchName, changes, issue.title);
 }
 
 main().catch(console.error);
-
 
 

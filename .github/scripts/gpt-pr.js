@@ -24,7 +24,7 @@ const chroma = new ChromaClient({
         headers: {
             Authorization: `Bearer ${process.env.CHROMADB_TOKEN}`,
         },
-        agent: new https.Agent({ rejectUnauthorized: false }), // если нужен SSL
+        agent: new https.Agent({ rejectUnauthorized: false }),
     },
 });
 
@@ -45,17 +45,30 @@ async function searchCode(query) {
         queryTexts: [query],
         nResults: 5,
     });
-    return results[0]?.documents || [];
+    // возвращаем объекты {path, content}
+    return results[0]?.documents.map((doc, idx) => ({
+        path: results[0].metadatas[idx]?.path || `unknown-${idx}.txt`,
+        content: doc,
+    })) || [];
 }
 
-// Генерация PR через GPT
-async function generatePR(issue) {
-    const relevantCode = await searchCode(issue.title);
+// Генерация изменений через GPT
+async function generateChanges(issue, relevantFiles) {
     const prompt = `
 Задача: ${issue.title}
 Описание: ${issue.body}
-Вот релевантный код из репозитория: ${relevantCode.join("\n\n")}
-Предложи изменения и сформируй git patch (или файл изменений) и комментарий для Pull Request.
+
+Вот релевантные фрагменты кода из репозитория:
+${relevantFiles.map(f => `Файл: ${f.path}\n${f.content}`).join("\n\n")}
+
+Предложи изменения для каждого файла. 
+Сформируй ответ в JSON формате:
+[
+  {
+    "path": "<путь к файлу>",
+    "content": "<новый код файла после изменений>"
+  }
+]
 `;
 
     const response = await openai.chat.completions.create({
@@ -64,11 +77,17 @@ async function generatePR(issue) {
         max_tokens: 2000,
     });
 
-    return response.choices[0].message.content;
+    try {
+        return JSON.parse(response.choices[0].message.content);
+    } catch (err) {
+        console.error("Ошибка парсинга ответа GPT:", err);
+        console.log(response.choices[0].message.content);
+        return [];
+    }
 }
 
 // Создаем Pull Request
-async function createPR(branchName, prBody) {
+async function createPR(branchName, changes) {
     // Берем SHA ветки master
     const masterRef = await octokit.git.getRef({
         owner,
@@ -84,35 +103,37 @@ async function createPR(branchName, prBody) {
         sha: masterRef.data.object.sha,
     });
 
-    // Добавляем или обновляем файл
-    try {
-        const { data: fileData } = await octokit.repos.getContent({
-            owner,
-            repo,
-            path: "README.md",
-            ref: "master",
-        });
+    // Применяем изменения к каждому файлу
+    for (const file of changes) {
+        try {
+            const { data: fileData } = await octokit.repos.getContent({
+                owner,
+                repo,
+                path: file.path,
+                ref: "master",
+            });
 
-        // Если файл существует, нужно передать sha
-        await octokit.repos.createOrUpdateFileContents({
-            owner,
-            repo,
-            path: "README.md",
-            message: `AI PR for Issue #${issueNumber}`,
-            content: Buffer.from(prBody).toString("base64"),
-            branch: branchName,
-            sha: fileData.sha,
-        });
-    } catch (err) {
-        // Если файла нет, создаем новый без sha
-        await octokit.repos.createOrUpdateFileContents({
-            owner,
-            repo,
-            path: "README.md",
-            message: `AI PR for Issue #${issueNumber}`,
-            content: Buffer.from(prBody).toString("base64"),
-            branch: branchName,
-        });
+            // Если файл существует, обновляем с sha
+            await octokit.repos.createOrUpdateFileContents({
+                owner,
+                repo,
+                path: file.path,
+                message: `AI PR for Issue #${issueNumber}`,
+                content: Buffer.from(file.content).toString("base64"),
+                branch: branchName,
+                sha: fileData.sha,
+            });
+        } catch (err) {
+            // Если файла нет, создаем новый без sha
+            await octokit.repos.createOrUpdateFileContents({
+                owner,
+                repo,
+                path: file.path,
+                message: `AI PR for Issue #${issueNumber}`,
+                content: Buffer.from(file.content).toString("base64"),
+                branch: branchName,
+            });
+        }
     }
 
     // Создаем PR
@@ -122,18 +143,21 @@ async function createPR(branchName, prBody) {
         head: branchName,
         base: "master",
         title: `AI PR for Issue #${issueNumber}`,
-        body: prBody,
+        body: `AI предложенные изменения для задачи: ${issue.title}`,
     });
 
     console.log(`Pull Request created: ${pr.html_url}`);
 }
 
+// Основной запуск
 async function main() {
     const issue = await getIssue();
-    const prBody = await generatePR(issue);
+    const relevantFiles = await searchCode(issue.title);
+    const changes = await generateChanges(issue, relevantFiles);
     const branchName = `ai-issue-${issueNumber}`;
-    await createPR(branchName, prBody);
+    await createPR(branchName, changes);
 }
 
 main().catch(console.error);
+
 

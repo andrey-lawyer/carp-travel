@@ -11,7 +11,7 @@ on:
 
 jobs:
   vector-map:
-    runs-on: ubuntu-latest  # стандартный GitHub runner
+    runs-on: ubuntu-latest
     steps:
       # 1. Клонируем репозиторий
       - name: Checkout repository

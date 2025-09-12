@@ -18,9 +18,9 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // ChromaDB
 const chroma = new CloudClient({
-    host: process.env.CHROMADB_HOST || "181.41.213.86",
-    port: parseInt(process.env.CHROMADB_PORT || "1811", 10),
-    token: process.env.CHROMADB_TOKEN || "JlYpcJQhbtT1sEqcVCUoy9je09gGRAr1",
+    host: process.env.CHROMADB_HOST,
+    port: parseInt(process.env.CHROMADB_PORT, 10),
+    token: process.env.CHROMADB_TOKEN ,
 });
 
 // Получаем Issue

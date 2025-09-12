@@ -30,8 +30,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          CHROMA_HOST: ${{ secrets.CHROMADB_HOST }}
-          CHROMA_PORT: ${{ secrets.CHROMADB_PORT }}
-          CHROMA_TOKEN: ${{ secrets.CHROMADB_TOKEN }}
+          CHROMADB_HOST: ${{ secrets.CHROMADB_HOST }}
+          CHROMADB_PORT: ${{ secrets.CHROMADB_PORT }}
+          CHROMADB_TOKEN: ${{ secrets.CHROMADB_TOKEN }}
         run: node .github/scripts/gpt-pr.js ${{ github.event.issue.number }}
 

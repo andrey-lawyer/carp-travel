@@ -1,61 +1,48 @@
-# CarpTravel
+Понял, что тебе нужно внести изменения в код для выполнения операции "add". Давай условимся, что ты хочешь добавить новую функциональность или изменить существующий код в рамках репозитория.
 
-## Project Description
+### Пример изменений
 
-The "CarpTravel" project is a website aimed at helping travelers and vacationers discover a wide range of recreational and entertainment activities in the Carpathian Mountains.
+Предположим, у нас есть следующее Python-функция, которая складывает два числа:
 
-## Project Benefits
+```python
+def add(a, b):
+    return a + b
+```
 
-- The website provides extensive information on various types of recreation in the Carpathians, including mountain hikes, tours, sports events, and more.
-- Users can find contact details of service providers and make online bookings for activities.
-- The site offers photos and reviews of places and events to assist users in choosing the best options for their leisure.
+Мы можем улучшить эту функцию, добавив обработку ошибок, чтобы она могла управлять случаями, когда переданные значения не являются числами.
 
-## Technologies Used
+### Измененный код
 
-The project makes use of several key technologies and libraries:
+```python
+def add(a, b):
+    # Проверка типов
+    if not (isinstance(a, (int, float)) and isinstance(b, (int, float))):
+        raise ValueError("Ожидались два числа.")
+    return a + b
+```
 
-- **Next.js**: A React framework for building fast and powerful web applications.
-- **React-hook-form**: Used for form validation.
-- **Swiper**: Employed for creating visually appealing and user-friendly slides.
-- **react-scroll**: Facilitates smooth navigation through website sections.
+### Создание git patch
 
-## Getting Started
+Вот как будет выглядеть `git patch`, который добавляет проверку типов в функцию `add`:
 
-1. **Clone the repository:**
-git clone https://github.com/andrey-lawyer/carp-travel
+```
+diff --git a/my_module.py b/my_module.py
+index e69de29..d95f4f6 100644
+--- a/my_module.py
++++ b/my_module.py
+@@ -1,3 +1,7 @@
+ def add(a, b):
++    # Проверка типов
++    if not (isinstance(a, (int, float)) and isinstance(b, (int, float))):
++        raise ValueError("Ожидались два числа.")
+     return a + b
+```
 
-2. **Install dependencies:**
-cd carp-travel
-npm install
+### Комментарий для Pull Request
 
-3. **Run the project:**
-The project will be accessible at `http://localhost:3000`.
+**Название**: Улучшение функции сложения с проверкой типов
 
-## Getting Help
-If you have any questions or encounter issues with the project, you can seek assistance from the following sources:
+**Описание**:
+В этом обновлении я добавил проверку типов для функции `add`. Теперь функция генерирует подъем `ValueError`, если входные параметры не являются числами (int или float). Это улучшение делает функцию более устойчивой и информативной в случае неправильного использования.
 
-- [Next.js Documentation](https://nextjs.org/docs) - for Next.js-related questions.
-- [React Documentation](https://reactjs.org/docs) - for React-related questions.
-- [Next.js Forum on Stack Overflow](https://stackoverflow.com/questions/tagged/next.js) - for community support.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Пожалуйста, дайте знать, если потребуется дополнительная информация или изменения!

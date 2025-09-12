@@ -38,7 +38,7 @@ async function getIssue() {
 
 /// Поиск релевантного кода в ChromaDB
 async function searchCode(query) {
-    const collection = await chroma.getCollection({ name: "openai-carp-travel" });
+    const collection = await chroma.getCollection({ name: "openai-crm-proxy" });
 
     // основной запрос
     const results = await collection.query({

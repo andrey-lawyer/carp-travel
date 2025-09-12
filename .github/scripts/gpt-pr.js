@@ -40,7 +40,7 @@ async function getIssue() {
 
 // Поиск релевантного кода в ChromaDB
 async function searchCode(query) {
-    const collection = await chroma.getCollection("openai-carp-travel"); // коллекция
+    const collection = await chroma.getCollection({ name: "openai-carp-travel" });// коллекция
     const results = await collection.query({
         queryTexts: [query],
         nResults: 5,

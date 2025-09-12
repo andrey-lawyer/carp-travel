@@ -11,7 +11,9 @@ if (!issueNumber) {
 }
 
 // GitHub
-const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+console.log("process.env.GH_PAT", process.env.GH_PAT)
+
+const octokit = new Octokit({ auth: process.env.GH_PAT });
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 
 // OpenAI

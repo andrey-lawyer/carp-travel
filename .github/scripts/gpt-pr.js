@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import OpenAI from "openai";
-import ChromaClient from "@chromadb/chroma"; // официальный клиент Chroma
+import { CloudClient } from "chromadb"; // актуальный пакет
 
 const issueNumber = process.argv[2];
 
@@ -17,9 +17,9 @@ const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // ChromaDB
-const chroma = new ChromaClient({
+const chroma = new CloudClient({
     host: process.env.CHROMADB_HOST || "181.41.213.86",
-    port: process.env.CHROMADB_PORT || 1811,
+    port: parseInt(process.env.CHROMADB_PORT || "1811", 10),
     token: process.env.CHROMADB_TOKEN || "JlYpcJQhbtT1sEqcVCUoy9je09gGRAr1",
 });
 

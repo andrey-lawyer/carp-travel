@@ -19,7 +19,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install @octokit/rest openai @chromadb/chroma
+        run: npm install @octokit/rest openai chromadb
 
       - name: Run GPT PR script
         env:

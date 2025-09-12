@@ -36,7 +36,7 @@ jobs:
           db_type: "chromadb"
           chroma_host: ${{ secrets.CHROMADB_HOST }}
           chroma_port: ${{ secrets.CHROMADB_PORT }}
-          chroma_collection: "openai-сarp-travel"
+          chroma_collection: "openai-carp-travel"
           chroma_auth_enabled: "true"
           chroma_auth_type: "token"
           chroma_auth_credentials: ${{ secrets.CHROMADB_TOKEN }}

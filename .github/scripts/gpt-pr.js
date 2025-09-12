@@ -1,5 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import OpenAI from "openai";
+import ChromaClient from "@chromadb/chroma"; // официальный клиент Chroma
 
 const issueNumber = process.argv[2];
 
@@ -15,21 +16,42 @@ const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 // OpenAI
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+// ChromaDB
+const chroma = new ChromaClient({
+    host: process.env.CHROMADB_HOST || "181.41.213.86",
+    port: process.env.CHROMADB_PORT || 1811,
+    token: process.env.CHROMADB_TOKEN || "JlYpcJQhbtT1sEqcVCUoy9je09gGRAr1",
+});
 
-// 1. Получаем Issue
+// Получаем Issue
 async function getIssue() {
-    const { data } = await octokit.issues.get({ owner, repo, issue_number: issueNumber });
+    const { data } = await octokit.issues.get({
+        owner,
+        repo,
+        issue_number: issueNumber,
+    });
     return data;
 }
 
-// 2. Генерируем PR через GPT
+// Поиск релевантного кода в ChromaDB
+async function searchCode(query) {
+    const collection = await chroma.collection("openai-crm-proxy"); // коллекция
+    const results = await collection.query({
+        queryTexts: [query],
+        nResults: 5,
+    });
+    return results[0]?.documents || [];
+}
+
+// Генерация PR через GPT
 async function generatePR(issue) {
+    const relevantCode = await searchCode(issue.title);
     const prompt = `
-    Задача: ${issue.title}
-    Описание: ${issue.body}
-    Используй код из репозитория (доступно через ChromaDB), чтобы предложить изменения.
-    Сформируй git patch и комментарий для Pull Request.
-  `;
+Задача: ${issue.title}
+Описание: ${issue.body}
+Вот релевантный код из репозитория: ${relevantCode.join("\n\n")}
+Предложи изменения и сформируй git patch (или файл изменений) и комментарий для Pull Request.
+`;
 
     const response = await openai.chat.completions.create({
         model: "gpt-4o-mini",
@@ -37,14 +59,17 @@ async function generatePR(issue) {
         max_tokens: 2000,
     });
 
-    const prContent = response.choices[0].message.content;
-    return prContent;
+    return response.choices[0].message.content;
 }
 
-// 3. Создаём Pull Request
+// Создаем Pull Request
 async function createPR(branchName, prBody) {
-    // создаём новую ветку
-    const mainRef = await octokit.git.getRef({ owner, repo, ref: "heads/main" });
+    const mainRef = await octokit.git.getRef({
+        owner,
+        repo,
+        ref: "heads/main",
+    });
+
     await octokit.git.createRef({
         owner,
         repo,
@@ -52,18 +77,16 @@ async function createPR(branchName, prBody) {
         sha: mainRef.data.object.sha,
     });
 
-    // создаём файл изменений (или патч)
-    // для примера просто README.md добавляем
+    // Для примера создаем README.md, можно заменить на реальные изменения
     await octokit.repos.createOrUpdateFileContents({
         owner,
         repo,
         path: "README.md",
-        message: `Update from Issue #${issueNumber}`,
+        message: `AI PR for Issue #${issueNumber}`,
         content: Buffer.from(prBody).toString("base64"),
         branch: branchName,
     });
 
-    // создаём PR
     const { data: pr } = await octokit.pulls.create({
         owner,
         repo,

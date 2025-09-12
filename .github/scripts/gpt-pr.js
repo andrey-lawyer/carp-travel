@@ -72,7 +72,7 @@ async function createPR(branchName, prBody) {
     const mainRef = await octokit.git.getRef({
         owner,
         repo,
-        ref: "heads/main",
+        ref: "heads/master",
     });
 
     await octokit.git.createRef({

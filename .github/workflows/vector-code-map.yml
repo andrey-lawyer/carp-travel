@@ -1,0 +1,49 @@
+name: Update Vector Code Map Manually
+
+# Запуск вручную
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Scan mode (full or diff)'
+        required: true
+        default: 'diff'
+
+jobs:
+  vector-map:
+    runs-on: self-hosted  # можно поменять на ubuntu-latest
+    steps:
+      # 1. Клонируем репозиторий
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # 2. Объявляем env переменные (секреты)
+      - name: Set environment variables
+        run: |
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+          echo "CHROMADB_HOST=${{ secrets.CHROMADB_HOST }}" >> $GITHUB_ENV
+          echo "CHROMADB_PORT=${{ secrets.CHROMADB_PORT }}" >> $GITHUB_ENV
+          echo "CHROMADB_TOKEN=${{ secrets.CHROMADB_TOKEN }}" >> $GITHUB_ENV
+
+      # 3. Запуск Vector Code Map Action
+      - name: Update Vector Code Map
+        uses: forproxyband/vector-code-map@main
+        with:
+          mode: ${{ github.event.inputs.mode }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          db_type: "chromadb"
+          chroma_host: ${{ secrets.CHROMADB_HOST }}
+          chroma_port: ${{ secrets.CHROMADB_PORT }}
+          chroma_collection: "openai-crm-proxy"
+          chroma_auth_enabled: "true"
+          chroma_auth_type: "token"
+          chroma_auth_credentials: ${{ secrets.CHROMADB_TOKEN }}
+          chroma_ssl_enabled: "false"
+          file_extensions: ".js,.ts,.jsx,.tsx,.html,.css,.md,.txt,.groovy,.java,.properties"
+          exclude_patterns: "node_modules/**,dist/**,.git/**"
+
+      # 4. Логирование
+      - name: Print done
+        run: echo "✅ Vector Code Map обновлён!"

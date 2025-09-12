@@ -1,0 +1,10 @@
+{
+  "name": "gpt-pr-action",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@octokit/rest": "^20.0.0",
+    "openai": "^4.0.0",
+    "chromadb": "^2.4.6"
+  }
+}

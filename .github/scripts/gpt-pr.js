@@ -36,9 +36,11 @@ async function getIssue() {
     return data;
 }
 
-// Поиск релевантного кода в ChromaDB
+/// Поиск релевантного кода в ChromaDB
 async function searchCode(query) {
     const collection = await chroma.getCollection({ name: "openai-carp-travel" });
+
+    // основной запрос
     const results = await collection.query({
         queryTexts: [query],
         nResults: 5,
@@ -47,12 +49,20 @@ async function searchCode(query) {
     console.log("🔍 Результаты ChromaDB:");
     console.dir(results, { depth: null });
 
+    // дополнительная отладка
+    const checkResults = await collection.query({
+        queryTexts: ["navigation", "link", "header"],
+        nResults: 5,
+    });
+    console.log("🔎 Debug search (keywords):", JSON.stringify(checkResults, null, 2));
+
     // возвращаем объекты {path, content}
-    return results[0]?.documents.map((doc, idx) => ({
-        path: results[0].metadatas[idx]?.path || `unknown-${idx}.txt`,
+    return results?.documents?.[0]?.map((doc, idx) => ({
+        path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,
         content: doc,
     })) || [];
 }
+
 
 
 // Парсинг JSON из текста GPT

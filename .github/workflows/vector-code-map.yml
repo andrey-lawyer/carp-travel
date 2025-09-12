@@ -31,8 +31,8 @@ jobs:
       - name: Update Vector Code Map
         uses: forproxyband/vector-code-map@main
         with:
-          mode: ${{ github.event.inputs.mode }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          mode: "diff"
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           db_type: "chromadb"
           chroma_host: ${{ secrets.CHROMADB_HOST }}
           chroma_port: ${{ secrets.CHROMADB_PORT }}

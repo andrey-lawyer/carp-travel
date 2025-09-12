@@ -39,13 +39,21 @@ async function getIssue() {
 // Поиск релевантного кода в ChromaDB
 async function searchCode(query) {
     const collection = await chroma.getCollection({ name: "openai-carp-travel" });
-    const results = await collection.query({ queryTexts: [query], nResults: 5 });
+    const results = await collection.query({
+        queryTexts: [query],
+        nResults: 5,
+    });
 
+    console.log("🔍 Результаты ChromaDB:");
+    console.dir(results, { depth: null });
+
+    // возвращаем объекты {path, content}
     return results[0]?.documents.map((doc, idx) => ({
         path: results[0].metadatas[idx]?.path || `unknown-${idx}.txt`,
         content: doc,
     })) || [];
 }
+
 
 // Парсинг JSON из текста GPT
 function parseGPTJSON(text) {

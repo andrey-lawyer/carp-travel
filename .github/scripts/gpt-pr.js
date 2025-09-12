@@ -11,8 +11,6 @@ if (!issueNumber) {
 }
 
 // GitHub
-console.log("process.env.GH_PAT", process.env.GH_PAT)
-
 const octokit = new Octokit({ auth: process.env.GH_PAT });
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 
@@ -42,7 +40,7 @@ async function getIssue() {
 
 // Поиск релевантного кода в ChromaDB
 async function searchCode(query) {
-    const collection = await chroma.getCollection({ name: "openai-carp-travel" });// коллекция
+    const collection = await chroma.getCollection({ name: "openai-carp-travel" });
     const results = await collection.query({
         queryTexts: [query],
         nResults: 5,
@@ -71,33 +69,58 @@ async function generatePR(issue) {
 
 // Создаем Pull Request
 async function createPR(branchName, prBody) {
-    const mainRef = await octokit.git.getRef({
+    // Берем SHA ветки master
+    const masterRef = await octokit.git.getRef({
         owner,
         repo,
         ref: "heads/master",
     });
 
+    // Создаем новую ветку
     await octokit.git.createRef({
         owner,
         repo,
         ref: `refs/heads/${branchName}`,
-        sha: mainRef.data.object.sha,
+        sha: masterRef.data.object.sha,
     });
 
-    await octokit.repos.createOrUpdateFileContents({
-        owner,
-        repo,
-        path: "README.md", // для примера, можно заменить на патч
-        message: `AI PR for Issue #${issueNumber}`,
-        content: Buffer.from(prBody).toString("base64"),
-        branch: branchName,
-    });
+    // Добавляем или обновляем файл
+    try {
+        const { data: fileData } = await octokit.repos.getContent({
+            owner,
+            repo,
+            path: "README.md",
+            ref: "master",
+        });
 
+        // Если файл существует, нужно передать sha
+        await octokit.repos.createOrUpdateFileContents({
+            owner,
+            repo,
+            path: "README.md",
+            message: `AI PR for Issue #${issueNumber}`,
+            content: Buffer.from(prBody).toString("base64"),
+            branch: branchName,
+            sha: fileData.sha,
+        });
+    } catch (err) {
+        // Если файла нет, создаем новый без sha
+        await octokit.repos.createOrUpdateFileContents({
+            owner,
+            repo,
+            path: "README.md",
+            message: `AI PR for Issue #${issueNumber}`,
+            content: Buffer.from(prBody).toString("base64"),
+            branch: branchName,
+        });
+    }
+
+    // Создаем PR
     const { data: pr } = await octokit.pulls.create({
         owner,
         repo,
         head: branchName,
-        base: "main",
+        base: "master",
         title: `AI PR for Issue #${issueNumber}`,
         body: prBody,
     });
@@ -113,3 +136,4 @@ async function main() {
 }
 
 main().catch(console.error);
+

@@ -56,14 +56,23 @@ async function searchCode(query) {
         nResults: 30,
         include: ["documents", "metadatas", "distances"],
     });
+    const allDocs = await collection.get({ include: ["documents", "metadatas"] });
+    const tsxDocs = allDocs.documents
+        .map((doc, idx) => ({
+            path: allDocs.metadatas[idx]?.path || `unknown-${idx}`,
+            content: doc,
+        }))
+        .filter(f => f.path.endsWith(".tsx"));
 
-    console.log("🔍 Результаты ChromaDB:");
-    console.dir(results, { depth: null });
+    console.log("TSX файлы в коллекции:", tsxDocs.map(f => f.path))
 
-    return results?.documents?.[0]?.map((doc, idx) => ({
-        path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,
-        content: doc,
-    })) || [];
+    // console.log("🔍 Результаты ChromaDB:");
+    // console.dir(results, { depth: null });
+
+    // return results?.documents?.[0]?.map((doc, idx) => ({
+    //     path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,
+    //     content: doc,
+    // })) || [];
 }
 
 // Парсинг JSON из текста GPT
@@ -165,15 +174,15 @@ async function createPR(branchName, changes, issueTitle) {
 async function main() {
     const issue = await getIssue();
     const relevantFiles = await searchCode(issue.title);
-    const changes = await generateChanges(issue, relevantFiles);
+    // const changes = await generateChanges(issue, relevantFiles);
 
-    if (changes.length === 0) {
-        console.log("GPT не предложил изменений для файлов.");
-        return;
-    }
-
-    const branchName = `ai-issue-${issueNumber}`;
-    await createPR(branchName, changes, issue.title);
+    // if (changes.length === 0) {
+    //     console.log("GPT не предложил изменений для файлов.");
+    //     return;
+    // }
+    //
+    // const branchName = `ai-issue-${issueNumber}`;
+    // await createPR(branchName, changes, issue.title);
 }
 
 main().catch(console.error);

@@ -60,21 +60,36 @@ async function searchCode(query) {
         include: ["documents", "metadatas"]
     });
 
-// Фильтруем только tsx файлы
-    const tsxFiles = allData.documents[0].map((doc, idx) => ({
-        path: allData.metadatas[0][idx].path,
-        content: doc,
-    })).filter(f => f.path.endsWith(".tsx"));
+// documents и metadatas — это обычно массив массивов
+    const documents = allData.documents || [];
+    const metadatas = allData.metadatas || [];
+
+    const tsxFiles = [];
+
+    for (let i = 0; i < documents.length; i++) {
+        const docsArray = documents[i];
+        const metaArray = metadatas[i];
+
+        if (!docsArray || !metaArray) continue;
+
+        for (let j = 0; j < docsArray.length; j++) {
+            const path = metaArray[j]?.path;
+            const content = docsArray[j];
+            if (path?.endsWith(".tsx")) {
+                tsxFiles.push({ path, content });
+            }
+        }
+    }
 
     console.log("Все tsx файлы:", tsxFiles.length);
 
     // console.log("🔍 Результаты ChromaDB:");
     // console.dir(results, { depth: null });
 
-    return results?.documents?.[0]?.map((doc, idx) => ({
-        path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,
-        content: doc,
-    })) || [];
+    // return results?.documents?.[0]?.map((doc, idx) => ({
+    //     path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,
+    //     content: doc,
+    // })) || [];
 }
 
 // Парсинг JSON из текста GPT

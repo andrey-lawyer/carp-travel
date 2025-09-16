@@ -1,0 +1,23 @@
+name: AI PR for Issues FROM REPO
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  ai-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run AI Issue Handler
+        uses: forproxyband/jira-issues-assigned-ai@main
+        with:
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          gh_pat: ${{ secrets.GH_PAT }}
+          chromadb_host: ${{ secrets.CHROMADB_HOST }}
+          chromadb_port: ${{ secrets.CHROMADB_PORT }}
+          chromadb_token: ${{ secrets.CHROMADB_TOKEN }}
+          chromadb_collection: openai-carp-travel
+

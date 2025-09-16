@@ -5,9 +5,13 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Scan mode (full or diff)'
+        description: "Scan mode"
         required: true
-        default: 'diff'
+        default: "diff"
+        type: choice
+        options:
+          - diff
+          - full
 
 jobs:
   vector-map:
@@ -31,7 +35,7 @@ jobs:
       - name: Update Vector Code Map
         uses: forproxyband/vector-code-map@main
         with:
-          mode: "diff"
+          mode: ${{ github.event.inputs.mode }}
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           db_type: "chromadb"
           chroma_host: ${{ secrets.CHROMADB_HOST }}

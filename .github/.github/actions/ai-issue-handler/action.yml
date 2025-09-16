@@ -1,0 +1,37 @@
+name: "AI Issue Handler"
+description: "Generate PR from Issue using OpenAI + ChromaDB context"
+inputs:
+  issue-number:
+    description: "GitHub Issue number to process"
+    required: true
+  chroma-collection:
+    description: "ChromaDB collection name"
+    required: false
+    default: "openai-carp-travel"
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      shell: bash
+      working-directory: .github/actions/ai-issue-handler
+      run: npm ci || npm install
+
+    - name: Run AI Issue Handler
+      shell: bash
+      working-directory: .github/actions/ai-issue-handler
+      env:
+        GH_PAT: ${{ env.GH_PAT }}
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        OPENAI_API_KEY: ${{ env.OPENAI_API_KEY }}
+        CHROMADB_HOST: ${{ env.CHROMADB_HOST }}
+        CHROMADB_PORT: ${{ env.CHROMADB_PORT }}
+        CHROMADB_TOKEN: ${{ env.CHROMADB_TOKEN }}
+        CHROMADB_COLLECTION: ${{ inputs.chroma-collection }}
+      run: node index.js ${{ inputs.issue-number }}
+
+

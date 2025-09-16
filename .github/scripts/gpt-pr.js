@@ -11,7 +11,7 @@ if (!issueNumber) {
 }
 
 // GitHub
-const octokit = new Octokit({ auth: process.env.GH_PAT });
+const octokit = await createOctokitClient();
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 
 // OpenAI
@@ -89,21 +89,21 @@ function parseGPTJSON(text) {
 // Генерация изменений через GPT
 async function generateChanges(issue, relevantFiles) {
     const prompt = `
-Задача: ${issue.title}
-Описание: ${issue.body}
+Task: ${issue.title}
+Description: ${issue.body}
 
-Вот релевантные фрагменты кода из репозитория:
-${relevantFiles.map(f => `Файл: ${f.path}\n${f.content}`).join("\n\n")}
+Here are relevant code snippets from the repository:
+${relevantFiles.map(f => `File: ${f.path}\n${f.content}`).join("\n\n")}
 
-Предложи изменения для каждого файла, которые решат задачу. 
-Сформируй ответ строго в JSON формате:
+Please suggest modifications for each file to solve the task. 
+Return the answer strictly in JSON format:
 [
   {
-    "path": "<путь к файлу>",
-    "content": "<новый код файла после изменений>"
+    "path": "<file path>",
+    "content": "<updated file content>"
   }
 ]
-Можешь добавить несколько файлов, если нужно, даже если я их не указал точно.
+You may add additional files if necessary.
 `;
 
     const response = await openai.chat.completions.create({
@@ -185,6 +185,33 @@ async function main() {
 }
 
 main().catch(console.error);
+
+async function createOctokitClient() {
+    const githubToken = process.env.GITHUB_TOKEN;
+    const ghPat = process.env.GH_PAT;
+
+    if (!githubToken && !ghPat) {
+        console.error("No GitHub token provided! Set GITHUB_TOKEN or GH_PAT.");
+        process.exit(1);
+    }
+
+    // Пробуем сначала GITHUB_TOKEN
+    let octokit = new Octokit({ auth: githubToken || ghPat });
+
+    try {
+        // Тестовый запрос, чтобы проверить доступ
+        await octokit.repos.get({ owner: "OWNER_NAME", repo: "REPO_NAME" });
+        return octokit;
+    } catch (err) {
+        if (githubToken && ghPat) {
+            console.warn("GITHUB_TOKEN не имеет доступа, пробуем GH_PAT...");
+            octokit = new Octokit({ auth: ghPat });
+            return octokit;
+        } else {
+            throw err;
+        }
+    }
+}
 
 
 

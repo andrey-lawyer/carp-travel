@@ -56,17 +56,17 @@ async function searchCode(query) {
     //     nResults: 30,
     //     include: ["documents", "metadatas", "distances"],
     // });
-    const results = await collection.query({
-        queryTexts: [" "], // пустой текст, просто чтобы получить документы
-        nResults: 1000,
-        include: ["documents", "metadatas", "distances"],
+    const allData = await collection.get({
+        include: ["documents", "metadatas"]
     });
-   console.log(results?.documents?.[0]
-       ?.map((doc, idx) => ({
-           path: results.metadatas?.[0]?.[idx]?.path,
-           content: doc,
-       }))
-       .filter(f => f.path?.endsWith(".jsx")) || []);
+
+// Фильтруем только tsx файлы
+    const tsxFiles = allData.documents[0].map((doc, idx) => ({
+        path: allData.metadatas[0][idx].path,
+        content: doc,
+    })).filter(f => f.path.endsWith(".tsx"));
+
+    console.log("Все tsx файлы:", tsxFiles.length);
 
     // console.log("🔍 Результаты ChromaDB:");
     // console.dir(results, { depth: null });

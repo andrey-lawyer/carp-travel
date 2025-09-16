@@ -51,29 +51,26 @@ async function searchCode(query) {
 
     const embedding = await getEmbedding(query);
 
+    // const results = await collection.query({
+    //     queryEmbeddings: [embedding],
+    //     nResults: 30,
+    //     include: ["documents", "metadatas", "distances"],
+    // });
     const results = await collection.query({
-        queryEmbeddings: [embedding],
-        nResults: 30,
+        queryTexts: [" "], // можно пустой текст, просто для выборки
+        nResults: 1000,    // или число, которое точно больше количества файлов
         include: ["documents", "metadatas", "distances"],
+        where: { path: { $like: "%.jsx" } }, // фильтр по расширению
     });
-    const allDocs = await collection.get({ include: ["documents", "metadatas"] });
 
-    const flatDocs = allDocs.documents[0].map((doc, idx) => ({
-        path: allDocs.metadatas[0][idx]?.path || `unknown-${idx}`,
+
+    console.log("🔍 Результаты ChromaDB:");
+    console.dir(results, { depth: null });
+
+    return results?.documents?.[0]?.map((doc, idx) => ({
+        path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,
         content: doc,
-    }));
-
-    const tsxDocs = flatDocs.filter(f => f.path.endsWith(".tsx"));
-
-    console.log("TSX файлы в коллекции:", tsxDocs.map(f => f.path));
-
-    // console.log("🔍 Результаты ChromaDB:");
-    // console.dir(results, { depth: null });
-
-    // return results?.documents?.[0]?.map((doc, idx) => ({
-    //     path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,
-    //     content: doc,
-    // })) || [];
+    })) || [];
 }
 
 // Парсинг JSON из текста GPT

@@ -51,45 +51,26 @@ async function searchCode(query) {
 
     const embedding = await getEmbedding(query);
 
-    // const results = await collection.query({
-    //     queryEmbeddings: [embedding],
-    //     nResults: 30,
-    //     include: ["documents", "metadatas", "distances"],
-    // });
-    const allData = await collection.get({
-        include: ["documents", "metadatas"]
+    const results = await collection.query({
+        queryEmbeddings: [embedding],
+        nResults: 30,
+        include: ["documents", "metadatas", "distances"],
     });
 
-// documents и metadatas — это обычно массив массивов
-    const documents = allData.documents || [];
-    const metadatas = allData.metadatas || [];
 
-    const tsxFiles = [];
+    // Преобразуем в массив {path, content}
+    const files = results.documents[0].map((doc, idx) => ({
+        path: results.metadatas[0][idx]?.path || `unknown-${idx}.txt`,
+        content: doc,
+    }));
 
-    for (let i = 0; i < documents.length; i++) {
-        const docsArray = documents[i];
-        const metaArray = metadatas[i];
-
-        if (!docsArray || !metaArray) continue;
-
-        for (let j = 0; j < docsArray.length; j++) {
-            const path = metaArray[j]?.path;
-            const content = docsArray[j];
-            if (path?.endsWith(".tsx")) {
-                tsxFiles.push({ path, content });
-            }
-        }
-    }
-
-    console.log("Все tsx файлы:", tsxFiles.length);
-
-    // console.log("🔍 Результаты ChromaDB:");
-    // console.dir(results, { depth: null });
-
-    // return results?.documents?.[0]?.map((doc, idx) => ({
-    //     path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,
-    //     content: doc,
-    // })) || [];
+    // Выводим все найденные файлы
+    console.log("🔍 Найденные файлы:", files.length);
+    files.forEach(f => {
+        console.log("Файл:", f.path);
+        console.log("Содержимое (первые 300 символов):", f.content.slice(0, 300));
+        console.log("----");
+    });
 }
 
 // Парсинг JSON из текста GPT

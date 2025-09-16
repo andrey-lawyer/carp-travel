@@ -45,7 +45,7 @@ jobs:
           chroma_auth_type: "token"
           chroma_auth_credentials: ${{ secrets.CHROMADB_TOKEN }}
           chroma_ssl_enabled: "false"
-          file_extensions: ".js,.ts,.jsx,.tsx,.html,.css,.md,.txt,.groovy,.java,.properties"
+          file_extensions: ".js,.ts,.jsx,.tsx,.html,.css,.json,.md,.txt,.groovy,.java,.properties"
           exclude_patterns: "node_modules/**,dist/**,.git/**"
 
       # 4. Логирование

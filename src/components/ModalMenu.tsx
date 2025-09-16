@@ -8,14 +8,13 @@ import { IModal } from "@/types/propsType";
 
 export const ModalMenu: FC<IModal> = ({ setShowModal }) => {
   return (
-    <div className="w-[100%] h-[100%] bg-[rgba(1, 10, 5, 0.75)] backdrop-blur-[25px] pt-[43px]">
+    <div className="w-[100%] h-[100%] bg-[rgba(1,10,5,0.75)] backdrop-blur-[25px] pt-[43px]">
       <Container>
         <button
           type="button"
-          className=" block text-text-white text-button-font ml-auto"
+          className="block text-text-white text-button-font ml-auto"
           onClick={() => setShowModal(false)}
         >
-          {" "}
           CLOSE
         </button>
         <nav>
@@ -30,7 +29,7 @@ export const ModalMenu: FC<IModal> = ({ setShowModal }) => {
                   offset={50}
                   duration={500}
                   onSetActive={() => setShowModal(false)}
-                  className="bg-transparent text-text-white text-lg_modal tracking-[1.8px] cursor-pointer"
+                  className="bg-transparent text-red-500 hover:text-red-600 text-lg_modal tracking-[1.8px] cursor-pointer"
                 >
                   {item}
                 </Link>

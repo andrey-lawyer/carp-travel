@@ -53,7 +53,7 @@ async function searchCode(query) {
 
     const results = await collection.query({
         queryEmbeddings: [embedding],
-        nResults: 5,
+        nResults: 30,
         include: ["documents", "metadatas", "distances"],
     });
 

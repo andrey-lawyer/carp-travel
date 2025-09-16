@@ -15,7 +15,6 @@ export const ModalMenu: FC<IModal> = ({ setShowModal }) => {
           className=" block text-text-white text-button-font ml-auto"
           onClick={() => setShowModal(false)}
         >
-          {" "}
           CLOSE
         </button>
         <nav>
@@ -30,7 +29,7 @@ export const ModalMenu: FC<IModal> = ({ setShowModal }) => {
                   offset={50}
                   duration={500}
                   onSetActive={() => setShowModal(false)}
-                  className="bg-transparent text-text-white text-lg_modal tracking-[1.8px] cursor-pointer"
+                  className="bg-transparent text-text-white text-lg_modal tracking-[1.8px] cursor-pointer bg-red-500 hover:bg-red-600"
                 >
                   {item}
                 </Link>

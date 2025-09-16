@@ -53,7 +53,7 @@ async function searchCode(query) {
 
     const results = await collection.query({
         queryEmbeddings: [embedding],
-        nResults: 30,
+        nResults: 20,
         include: ["documents", "metadatas", "distances"],
     });
 
@@ -70,6 +70,7 @@ async function searchCode(query) {
         console.log("Содержимое (первые 300 символов):", f.content.slice(0, 300));
         console.log("----");
     });
+    return files;
 }
 
 // Парсинг JSON из текста GPT
@@ -170,16 +171,17 @@ async function createPR(branchName, changes, issueTitle) {
 // Основной запуск
 async function main() {
     const issue = await getIssue();
-    const relevantFiles = await searchCode(issue.title);
-    // const changes = await generateChanges(issue, relevantFiles);
+    const query = issue.body?.trim() ? issue.body : issue.title;
+    const relevantFiles = await searchCode(query);
+    const changes = await generateChanges(issue, relevantFiles);
 
-    // if (changes.length === 0) {
-    //     console.log("GPT не предложил изменений для файлов.");
-    //     return;
-    // }
-    //
-    // const branchName = `ai-issue-${issueNumber}`;
-    // await createPR(branchName, changes, issue.title);
+    if (changes.length === 0) {
+        console.log("GPT не предложил изменений для файлов.");
+        return;
+    }
+
+    const branchName = `ai-issue-${issueNumber}`;
+    await createPR(branchName, changes, issue.title);
 }
 
 main().catch(console.error);

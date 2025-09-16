@@ -57,15 +57,19 @@ async function searchCode(query) {
     //     include: ["documents", "metadatas", "distances"],
     // });
     const results = await collection.query({
-        queryTexts: [" "], // можно пустой текст, просто для выборки
-        nResults: 1000,    // или число, которое точно больше количества файлов
+        queryTexts: [" "], // пустой текст, просто чтобы получить документы
+        nResults: 1000,
         include: ["documents", "metadatas", "distances"],
-        where: { path: { $like: "%.jsx" } }, // фильтр по расширению
     });
+   console.log(results?.documents?.[0]
+       ?.map((doc, idx) => ({
+           path: results.metadatas?.[0]?.[idx]?.path,
+           content: doc,
+       }))
+       .filter(f => f.path?.endsWith(".jsx")) || []);
 
-
-    console.log("🔍 Результаты ChromaDB:");
-    console.dir(results, { depth: null });
+    // console.log("🔍 Результаты ChromaDB:");
+    // console.dir(results, { depth: null });
 
     return results?.documents?.[0]?.map((doc, idx) => ({
         path: results.metadatas?.[0]?.[idx]?.path || `unknown-${idx}.txt`,

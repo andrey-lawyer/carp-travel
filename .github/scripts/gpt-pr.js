@@ -47,7 +47,7 @@ async function getEmbedding(text) {
 
 // Поиск релевантного кода в ChromaDB
 async function searchCode(query) {
-    const collection = await chroma.getCollection({ name: "openai-crm-proxy" });
+    const collection = await chroma.getCollection({ name: "openai-carp-travel" });
 
     const embedding = await getEmbedding(query);
 
@@ -177,5 +177,7 @@ async function main() {
 }
 
 main().catch(console.error);
+
+
 
 

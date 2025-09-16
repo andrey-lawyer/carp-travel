@@ -57,14 +57,15 @@ async function searchCode(query) {
         include: ["documents", "metadatas", "distances"],
     });
     const allDocs = await collection.get({ include: ["documents", "metadatas"] });
-    const tsxDocs = allDocs.documents
-        .map((doc, idx) => ({
-            path: allDocs.metadatas[idx]?.path || `unknown-${idx}`,
-            content: doc,
-        }))
-        .filter(f => f.path.endsWith(".tsx"));
 
-    console.log("TSX файлы в коллекции:", tsxDocs.map(f => f.path))
+    const flatDocs = allDocs.documents[0].map((doc, idx) => ({
+        path: allDocs.metadatas[0][idx]?.path || `unknown-${idx}`,
+        content: doc,
+    }));
+
+    const tsxDocs = flatDocs.filter(f => f.path.endsWith(".tsx"));
+
+    console.log("TSX файлы в коллекции:", tsxDocs.map(f => f.path));
 
     // console.log("🔍 Результаты ChromaDB:");
     // console.dir(results, { depth: null });

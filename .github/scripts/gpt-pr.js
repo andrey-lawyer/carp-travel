@@ -60,11 +60,10 @@ async function searchCode(query) {
 
     // Преобразуем в массив {path, content}
     const files = results.documents[0].map((doc, idx) => ({
-        path: results.metadatas[0][idx]?.path || `unknown-${idx}.txt`,
+        path: results.metadatas[0][idx]?.file_path || `unknown-${idx}.txt`,
         content: doc,
     }));
 
-    // Выводим все найденные файлы
     console.log("🔍 Найденные файлы:", files.length);
     files.forEach(f => {
         console.log("Файл:", f.path);

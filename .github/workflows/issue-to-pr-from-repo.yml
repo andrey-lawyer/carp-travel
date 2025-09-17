@@ -11,12 +11,11 @@ jobs:
       - run: echo "Issue trigger works! Number ${{ github.event.issue.number }}"
   ai-pr:
     uses: forproxyband/jira-issues-assigned-ai/.github/workflows/ai-issue-handler.yml@main
-    with:
-      openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+    secrets:
       gh_pat: ${{ secrets.GH_PAT }}
+      openai_api_key: ${{ secrets.OPENAI_API_KEY }}
       chromadb_host: ${{ secrets.CHROMADB_HOST }}
       chromadb_port: ${{ secrets.CHROMADB_PORT }}
       chromadb_token: ${{ secrets.CHROMADB_TOKEN }}
-      chromadb_collection: openai-carp-travel
-    secrets: inherit
+      chromadb_collection: ${{ secrets.CHROMADB_COLLECTION }}
 

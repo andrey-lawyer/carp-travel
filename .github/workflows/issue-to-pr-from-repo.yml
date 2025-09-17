@@ -18,4 +18,5 @@ jobs:
       chromadb_port: ${{ secrets.CHROMADB_PORT }}
       chromadb_token: ${{ secrets.CHROMADB_TOKEN }}
       chromadb_collection: openai-carp-travel
+    secrets: inherit
 

@@ -1,21 +1,23 @@
-name: AI PR for Issues FROM REPO
+name: AI PR for Issues
 
 on:
   issues:
-    types: [opened]
+    types: [opened]  # запуск при создании нового Issue
 
 jobs:
-  test:
+  ai-pr:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Issue trigger works! Number ${{ github.event.issue.number }}"
-  ai-pr:
-    uses: forproxyband/jira-issues-assigned-ai/.github/workflows/ai-issue-handler.yml@main
-    secrets:
-      gh_pat: ${{ secrets.GH_PAT }}
-      openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-      chromadb_host: ${{ secrets.CHROMADB_HOST }}
-      chromadb_port: ${{ secrets.CHROMADB_PORT }}
-      chromadb_token: ${{ secrets.CHROMADB_TOKEN }}
-      chromadb_collection: ${{ secrets.CHROMADB_COLLECTION }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run AI Issue Handler
+        uses: forproxyband/jira-issues-assigned-ai@main
+        with:
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          gh_pat: ${{ secrets.GH_PAT }}
+          chromadb_host: localhost
+          chromadb_port: 8000
+          chromadb_token: ${{ secrets.CHROMADB_TOKEN }}
+          chromadb_collection: openai-carp-travel
 

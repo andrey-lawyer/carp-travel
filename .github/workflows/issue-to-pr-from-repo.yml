@@ -5,6 +5,10 @@ on:
     types: [opened]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Issue trigger works! Number ${{ github.event.issue.number }}"
   ai-pr:
     uses: forproxyband/jira-issues-assigned-ai/.github/workflows/ai-issue-handler.yml@main
     with:

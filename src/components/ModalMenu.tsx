@@ -1,10 +1,10 @@
-import { FC } from "react";
-import { Link } from "react-scroll";
+import { FC } from 'react';
+import { Link } from 'react-scroll';
 
-import { Container } from "./Container";
-import nav from "@/data/nav.json";
+import { Container } from './Container';
+import nav from '@/data/nav.json';
 
-import { IModal } from "@/types/propsType";
+import { IModal } from '@/types/propsType';
 
 export const ModalMenu: FC<IModal> = ({ setShowModal }) => {
   return (
@@ -12,10 +12,9 @@ export const ModalMenu: FC<IModal> = ({ setShowModal }) => {
       <Container>
         <button
           type="button"
-          className=" block text-text-white text-button-font ml-auto"
+          className="block text-text-white text-button-font ml-auto"
           onClick={() => setShowModal(false)}
         >
-          {" "}
           CLOSE
         </button>
         <nav>
@@ -30,7 +29,7 @@ export const ModalMenu: FC<IModal> = ({ setShowModal }) => {
                   offset={50}
                   duration={500}
                   onSetActive={() => setShowModal(false)}
-                  className="bg-transparent text-text-white text-lg_modal tracking-[1.8px] cursor-pointer"
+                  className="bg-red-500 hover:bg-red-600 focus:bg-red-600 text-text-white text-lg_modal tracking-[1.8px] cursor-pointer"
                 >
                   {item}
                 </Link>

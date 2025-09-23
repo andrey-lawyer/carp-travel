@@ -1,16 +1,14 @@
-"use client";
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+import { Link } from 'react-scroll';
 
-import dynamic from "next/dynamic";
-import { useState } from "react";
-import { Link } from "react-scroll";
-
-const MediaQuery = dynamic(() => import("react-responsive"), {
+const MediaQuery = dynamic(() => import('react-responsive'), {
   ssr: false,
 });
 
-import { Portal } from "./Portal";
-import { ModalMenu } from "./ModalMenu";
-import nav from "@/data/nav.json";
+import { Portal } from './Portal';
+import { ModalMenu } from './ModalMenu';
+import nav from '@/data/nav.json';
 
 export function Nav() {
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +18,7 @@ export function Nav() {
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="  bg-transparent text-text-white text-button-font "
+          className="bg-transparent text-text-white text-button-font"
         >
           MENU
         </button>
@@ -43,7 +41,7 @@ export function Nav() {
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className="bg-transparent text-text-white text-button-font cursor-pointer   "
+                  className="bg-red-500 hover:bg-red-600 focus:bg-red-600 text-text-white text-button-font cursor-pointer"
                 >
                   {item}
                 </Link>

@@ -35,7 +35,7 @@
            CHROMADB_PORT: ${{ secrets.CHROMADB_PORT }}
            CHROMADB_COLLECTION: "openai-carp-travel"
 #           CHROMADB_TOKEN: ${{ secrets.CHROMADB_TOKEN }}
-           chromadb_credentials: ${{ secrets.CHROMADB_TOKEN }}
+           CHROMADB_CREDENTIALS: ${{ secrets.CHROMADB_TOKEN }}
 #         run: node .github/scripts/gpt-pr.js ${{ github.event.issue.number }}
          run: node .github/scripts/index.js ${{ github.event.issue.number }}
 

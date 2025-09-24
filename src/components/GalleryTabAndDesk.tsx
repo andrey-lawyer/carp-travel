@@ -58,14 +58,14 @@ export function GalleryTabAndDesk() {
       <div className="absolute bottom-[59px] desk:bottom-[94px] z-10 w-[704px] desk:w-[1280px] flex justify-between text-white text-xxl_tab_nav_image font-thin pl-[37px] pb-[17px] pr-[38px] desk:px-6">
         <button
           type="button"
-          className="desk:w-[294px] desk:text-right"
+          className="desk:w-[294px] desk:text-right bg-red-600"
           onClick={() => swiperRef.current?.slidePrev()}
         >
           BACK
         </button>
         <button
           type="button"
-          className="desk:w-[294px] desk:text-left"
+          className="desk:w-[294px] desk:text-left bg-red-600"
           onClick={() => {
             return swiperRef.current?.slideNext();
           }}

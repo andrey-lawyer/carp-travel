@@ -3,8 +3,9 @@ import { createOctokitClient } from "../clients/githubClient.js";
 export async function createPR(branchName, changes, issueTitle, mockIssueNumber) {
     const octokit = await createOctokitClient();
     const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+    const targetBranch = process.env.GITHUB_TARGET_BRANCH || "main";
 
-    const masterRef = await octokit.git.getRef({ owner, repo, ref: "heads/master" });
+    const masterRef = await octokit.git.getRef({ owner, repo,  ref: `heads/${targetBranch}`, });
 
     await octokit.git.createRef({
         owner, repo,
@@ -15,7 +16,7 @@ export async function createPR(branchName, changes, issueTitle, mockIssueNumber)
     for (const file of changes) {
         try {
             const { data: fileData } = await octokit.repos.getContent({
-                owner, repo, path: file.path, ref: "master",
+                owner, repo, path: file.path, ref: targetBranch,
             });
 
             await octokit.repos.createOrUpdateFileContents({
@@ -38,7 +39,7 @@ export async function createPR(branchName, changes, issueTitle, mockIssueNumber)
     const { data: pr } = await octokit.pulls.create({
         owner, repo,
         head: branchName,
-        base: "master",
+        base: targetBranch,
         title: `AI PR for Issue #${mockIssueNumber}`,
         body: `AI предложенные изменения для задачи: ${issueTitle}`,
     });

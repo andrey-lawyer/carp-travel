@@ -33,9 +33,8 @@
            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
            CHROMADB_HOST: ${{ secrets.CHROMADB_HOST }}
            CHROMADB_PORT: ${{ secrets.CHROMADB_PORT }}
-           CHROMADB_COLLECTION: "openai-carp-travel"
-#           CHROMADB_TOKEN: ${{ secrets.CHROMADB_TOKEN }}
            CHROMADB_CREDENTIALS: ${{ secrets.CHROMADB_TOKEN }}
-#         run: node .github/scripts/gpt-pr.js ${{ github.event.issue.number }}
+           CHROMADB_COLLECTION: "openai-carp-travel"
+           GITHUB_TARGET_BRANCH: "master"
          run: node .github/scripts/index.js ${{ github.event.issue.number }}
 

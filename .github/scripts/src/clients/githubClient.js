@@ -12,6 +12,7 @@ export async function createOctokitClient() {
         throw new Error("No GitHub token provided! Set GITHUB_TOKEN or GH_PAT.");
     }
 
-    cachedOctokit = new Octokit({ auth: githubToken || ghPat });
+    const selectedToken = ghPat || githubToken;
+    cachedOctokit = new Octokit({ auth: selectedToken });
     return cachedOctokit;
 }

@@ -20,8 +20,7 @@ export function Nav() {
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="  bg-transparent text-text-white text-button-font "
-        >
+          className="  bg-transparent text-text-white text-button-font ">
           MENU
         </button>
         {showModal && (
@@ -43,7 +42,7 @@ export function Nav() {
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className="bg-transparent text-text-white text-button-font cursor-pointer   "
+                  className="bg-transparent text-text-white text-button-font cursor-pointer bg-red-600"
                 >
                   {item}
                 </Link>

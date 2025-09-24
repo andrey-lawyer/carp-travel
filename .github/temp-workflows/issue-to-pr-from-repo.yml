@@ -16,8 +16,9 @@ jobs:
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           gh_pat: ${{ secrets.GH_PAT }}
-          chromadb_host: localhost
-          chromadb_port: 8000
-          chromadb_token: ${{ secrets.CHROMADB_TOKEN }}
+          chromadb_host: 181.41.213.86
+          chromadb_port: 1811
+#          chromadb_token: ${{ secrets.CHROMADB_TOKEN }}
+          chromadb_token: ${{ secrets.CHROMADB_CREDENTIALS }}
           chromadb_collection: openai-carp-travel
 

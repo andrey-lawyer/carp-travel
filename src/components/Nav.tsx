@@ -1,12 +1,8 @@
-"use client";
-
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Link } from "react-scroll";
 
-const MediaQuery = dynamic(() => import("react-responsive"), {
-  ssr: false,
-});
+const MediaQuery = dynamic(() => import("react-responsive"), { ssr: false });
 
 import { Portal } from "./Portal";
 import { ModalMenu } from "./ModalMenu";
@@ -20,7 +16,7 @@ export function Nav() {
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="  bg-transparent text-text-white text-button-font "
+          className="bg-transparent text-text-white text-button-font"
         >
           MENU
         </button>
@@ -43,7 +39,7 @@ export function Nav() {
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className="bg-transparent text-text-white text-button-font cursor-pointer   "
+                  className="bg-red-600 text-text-white text-button-font cursor-pointer px-4 py-2 rounded-md" /* Updated button styles */
                 >
                   {item}
                 </Link>

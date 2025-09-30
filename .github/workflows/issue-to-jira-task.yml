@@ -1,0 +1,41 @@
+ name: AI Issue Handler
+
+ on:
+   repository_dispatch:
+     types: [jira_task]  # This must match the event_type in your Jira webhook
+
+ jobs:
+   gpt-pr:
+     runs-on: ubuntu-latest
+     steps:
+       # 1. Клонируем репозиторий
+       - name: Checkout repository
+         uses: actions/checkout@v3
+         with:
+           fetch-depth: 0
+
+       # 2. Устанавливаем Node.js
+       - name: Set up Node.js
+         uses: actions/setup-node@v3
+         with:
+           node-version: '20'
+
+       # 3. Устанавливаем зависимости для скрипта
+       - name: Install Action dependencies
+         working-directory: .github/scripts
+         run: npm install
+
+       # 4. Запускаем скрипт, передавая номер Issue
+       - name: Run GPT PR script
+         env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # токен Actions
+           GH_PAT: ${{ secrets.GH_PAT }}               # fallback Personal Access Token
+           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+           CHROMADB_HOST: ${{ secrets.CHROMADB_HOST }}
+           CHROMADB_PORT: ${{ secrets.CHROMADB_PORT }}
+           CHROMADB_CREDENTIALS: ${{ secrets.CHROMADB_TOKEN }}
+           CHROMADB_COLLECTION: "openai-carp-travel"
+           GITHUB_TARGET_BRANCH: "master"
+           iSSUE_PPROVIDER: jira
+         run: node .github/scripts/index.js
+

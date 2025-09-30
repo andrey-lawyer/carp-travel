@@ -8,7 +8,7 @@ export async function searchCode(query) {
 
     const rawLimit = process.env.CHROMADB_QUERY_LIMIT;
     const parsedLimit = Number(rawLimit);
-    const nResults = Number.isFinite(parsedLimit) ? parsedLimit : 20;
+    const nResults = Number.isFinite(parsedLimit) ? parsedLimit : 5;
 
     const results = await collection.query({
         queryEmbeddings: [embedding],

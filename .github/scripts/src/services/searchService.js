@@ -1,9 +1,9 @@
-import { getCollectionByName } from "../clients/chromaClient.js";
+import {createChromaClient, getCollection} from "../clients/chromaClient.js";
 import { getEmbedding } from "./embeddingService.js";
 
 export async function searchCode(query) {
-    const collectionName = process.env.CHROMADB_COLLECTION;
-    const collection = await getCollectionByName(collectionName);
+    const chroma = createChromaClient();
+    const collection = await getCollection(chroma);
     const embedding = await getEmbedding(query);
 
     const rawLimit = process.env.CHROMADB_QUERY_LIMIT;

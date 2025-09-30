@@ -1,12 +1,7 @@
 import { ChromaClient } from "chromadb";
 import https from "https";
 
-let cachedChromaClient = null;
-const cachedCollections = new Map();
-
 export function createChromaClient() {
-    if (cachedChromaClient) return cachedChromaClient;
-
     const host = process.env.CHROMADB_HOST;
     const port = process.env.CHROMADB_PORT;
     const ssl = process.env.CHROMADB_SSL === "true";
@@ -28,7 +23,7 @@ export function createChromaClient() {
         headers["X-Api-Key"] = credentials;
     }
 
-    cachedChromaClient = new ChromaClient({
+    const client = new ChromaClient({
         path: `${protocol}://${host}:${port}`,
         fetchOptions: {
             headers,
@@ -36,21 +31,16 @@ export function createChromaClient() {
         },
     });
 
-    return cachedChromaClient;
+    return client;
 }
 
 
-export async function getCollectionByName(collectionName) {
+export async function getCollection(client) {
+    const collectionName = process.env.CHROMADB_COLLECTION;
+
     if (!collectionName) {
-        throw new Error("Collection name is required");
+        throw new Error("CHROMADB_COLLECTION is required but not set in environment variables");
     }
 
-    if (cachedCollections.has(collectionName)) {
-        return cachedCollections.get(collectionName);
-    }
-
-    const client = createChromaClient();
-    const collection = await client.getCollection({ name: collectionName });
-    cachedCollections.set(collectionName, collection);
-    return collection;
+    return await client.getCollection({ name: collectionName });
 }

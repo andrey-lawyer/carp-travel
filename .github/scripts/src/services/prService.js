@@ -41,11 +41,8 @@ export async function createPR(branchName, changes, issueTitle, mockIssueNumber)
         head: branchName,
         base: targetBranch,
         title: `AI PR for Issue #${mockIssueNumber}`,
-        body: `AI предложенные изменения для задачи: ${issueTitle}`,
+        body: `AI proposed changes for the task: ${issueTitle}`,
     });
 
     console.log(`Pull Request created: ${pr.html_url}`);
 }
-
-
-

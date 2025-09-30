@@ -1,10 +1,6 @@
 import { Octokit } from "@octokit/rest";
 
-let cachedOctokit = null;
-
 export async function createOctokitClient() {
-    if (cachedOctokit) return cachedOctokit;
-
     const githubToken = process.env.GITHUB_TOKEN;
     const ghPat = process.env.GH_PAT;
 
@@ -12,7 +8,5 @@ export async function createOctokitClient() {
         throw new Error("No GitHub token provided! Set GITHUB_TOKEN or GH_PAT.");
     }
 
-    const selectedToken = ghPat || githubToken;
-    cachedOctokit = new Octokit({ auth: selectedToken });
-    return cachedOctokit;
+    return new Octokit({ auth: githubToken || ghPat });
 }

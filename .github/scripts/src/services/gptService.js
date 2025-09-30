@@ -22,10 +22,8 @@ You may add additional files if necessary.
 `;
     const openai = createOpenAIClient();
 
-    const model = process.env.OPENAI_RESPONSE_MODEL || 'gpt-4o-mini';
-
     const response = await openai.chat.completions.create({
-        model: model,
+        model: process.env.OPENAI_RESPONSE_MODEL || "gpt-4o-mini",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 2000,
     });

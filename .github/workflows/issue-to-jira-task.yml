@@ -36,6 +36,6 @@
            CHROMADB_CREDENTIALS: ${{ secrets.CHROMADB_TOKEN }}
            CHROMADB_COLLECTION: "openai-carp-travel"
            GITHUB_TARGET_BRANCH: "master"
-           iSSUE_PROVIDER: jira
+           iSSUE_PROVIDER: "jira"
          run: node .github/scripts/index.js
 

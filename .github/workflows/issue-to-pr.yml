@@ -36,5 +36,6 @@
            CHROMADB_CREDENTIALS: ${{ secrets.CHROMADB_TOKEN }}
            CHROMADB_COLLECTION: "openai-carp-travel"
            GITHUB_TARGET_BRANCH: "master"
-         run: node .github/scripts/index.js ${{ github.event.issue.number }}
+         run: node .github/scripts/index.js
+       # run: node .github/scripts/index.js ${{ github.event.issue.number }}
 

@@ -40,6 +40,8 @@
 import fs from "fs";
 
 export function resolveIssueIdentifier() {
+  console.log("process.env.ISSUE_PROVIDER", process.env.ISSUE_PROVIDER);
+
   const provider = (process.env.ISSUE_PROVIDER || "github").toLowerCase();
   const eventName = process.env.GITHUB_EVENT_NAME;
   const eventPath = process.env.GITHUB_EVENT_PATH;

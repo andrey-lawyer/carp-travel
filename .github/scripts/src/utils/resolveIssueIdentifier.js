@@ -54,6 +54,9 @@ export function resolveIssueIdentifier() {
   let payload = null;
   try {
     payload = JSON.parse(fs.readFileSync(eventPath, "utf8"));
+
+    console.log("eventPath", eventPath);
+    console.log("payload", payload);
   } catch {
     console.error("Failed to parse event payload.");
     process.exit(1);

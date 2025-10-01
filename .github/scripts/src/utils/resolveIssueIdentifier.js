@@ -51,7 +51,7 @@ export function resolveIssueIdentifier() {
     process.exit(1);
   }
 
-  let payload =null;
+  let payload = null;
   try {
     payload = JSON.parse(fs.readFileSync(eventPath, "utf8"));
   } catch {
@@ -59,33 +59,39 @@ export function resolveIssueIdentifier() {
     process.exit(1);
   }
 
+  // ---------- GitHub ----------
   if (provider === "github") {
     const issue = payload?.issue || payload?.pull_request || {};
     return {
+      provider: "github",
       id: issue.number ?? null,
       key: issue.number ? String(issue.number) : null,
       title: issue.title || "No title",
       description: issue.body || "",
-      provider: "github",
-      event_type: null
+      status: issue.state || null,
+      event_type: eventName || null,
     };
   }
 
+  // ---------- Jira ----------
   if (provider === "jira" && eventName === "repository_dispatch") {
     const clientPayload = payload?.client_payload || {};
-    const issueKey =
-        clientPayload.issue_key || clientPayload.jira?.key || clientPayload.key || null;
+    const issue = clientPayload.issue  || {};
+
+    const fields = issue.fields || {};
 
     return {
-      id: null,
-      key: issueKey,
-      title: clientPayload.title || "No title",
-      description: clientPayload.description || "",
       provider: "jira",
-      event_type: payload.event_type || null
+      id: issue.id || null,
+      key:  issue.key || null,
+      title: fields.summary,
+      description: fields.description ,
+      status: fields.status?.name || null,
+      event_type: payload.event_type || null,
     };
   }
 
   console.error("Unable to resolve issue identifier.");
   process.exit(1);
 }
+

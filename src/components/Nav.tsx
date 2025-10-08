@@ -15,7 +15,7 @@ import nav from "@/data/nav.json";
 export function Nav() {
   const [showModal, setShowModal] = useState(false);
   return (
-    <>
+    <> 
       <MediaQuery maxWidth={767.9}>
         <button
           type="button"
@@ -43,7 +43,7 @@ export function Nav() {
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className="bg-transparent text-text-white text-button-font cursor-pointer   "
+                  className="bg-transparent text-text-white text-20px cursor-pointer"
                 >
                   {item}
                 </Link>

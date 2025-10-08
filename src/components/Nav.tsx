@@ -1,5 +1,3 @@
-"use client";
-
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Link } from "react-scroll";
@@ -43,7 +41,7 @@ export function Nav() {
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className="bg-transparent text-text-white text-button-font cursor-pointer   "
+                  className="bg-transparent text-text-white text-button-font cursor-pointer bg-blue-500 hover:bg-blue-700"
                 >
                   {item}
                 </Link>

@@ -6,9 +6,9 @@ export async function searchCode(query) {
     const collection = await getCollection(chroma);
     const embedding = await getEmbedding(query);
 
-    const rawLimit = process.env.CHROMADB_QUERY_LIMIT;
+    const rawLimit = process.env.CHROMADB_QUERY_LIMIT || 20;
     const parsedLimit = Number(rawLimit);
-    const nResults = Number.isFinite(parsedLimit) ? parsedLimit : 5;
+    const nResults = Number.isFinite(parsedLimit) ? parsedLimit : 20;
 
     const results = await collection.query({
         queryEmbeddings: [embedding],

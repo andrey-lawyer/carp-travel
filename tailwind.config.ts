@@ -14,7 +14,9 @@ const config: Config = {
       colors: {
         "text-white": "#FFFFFF",
         "text-date": "rgba(255, 255, 255, 0.20)",
-        "text-error": "#FF5757"
+        "text-error": "#FF5757",
+        "button-blue": "#1E90FF",
+        "button-blue-hover": "#1C86E5"
       },
       backgroundColor: {
         "bg-label": "rgba(255, 255, 255, 0.05)",

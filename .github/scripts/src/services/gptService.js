@@ -8,26 +8,40 @@ Task: ${issue.title}
 Description: ${issue.body}
 
 Here are relevant code snippets from the repository:
-${relevantFiles.map(f => `File: ${f.path}\n${f.content}`).join("\n\n")}
+${relevantFiles
+        .map(f => `File: ${f.path}\n---\n${f.content}\n---`)
+        .join("\n\n")}
 
-Please suggest modifications for each file to solve the task. 
-Return the answer strictly in JSON format:
-[
-  {
-    "path": "<file path>",
-    "content": "<updated file content>"
-  }
-]
+Please suggest modifications for each file to solve the task.
+Return only a JSON array of objects. Each object must have:
+- "path": string — the file path to update
+- "content": string — full updated content of the file
+Do not include any text outside the JSON.
 You may add additional files if necessary.
 `;
+
     const openai = createOpenAIClient();
     const model = process.env.OPENAI_RESPONSE_MODEL || 'gpt-4o-mini';
 
+    // Запрос к GPT
     const response = await openai.chat.completions.create({
-        model: model,
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 2000,
+        model,
+        messages: [
+            {
+                role: "system",
+                content: "You are an expert software developer. \n" +
+                    "Your task is to provide ONLY a JSON array of objects with fields \"path\" and \"content\".\n" +
+                    "Do NOT write any explanations, comments, or text outside the JSON.\n" +
+                    "The JSON must be valid and parseable."
+            },
+            {
+                role: "user",
+                content: prompt
+            }
+        ],
+        max_tokens: 3000,
     });
 
     return parseGPTJSON(response.choices[0].message.content);
 }
+

@@ -1,20 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-ul {
-  list-style: none;
-}
-
 button {
   color: inherit;
   cursor: pointer;
+  background-color: blue; /* Change button background color to blue */
+  border: none; /* Optional: remove default border */
+  padding: 10px 20px; /* Optional: add padding */
+  color: white; /* Change text color to white for better contrast */
+  border-radius: 5px; /* Optional: add rounded corners */
+}
+
+/* Keep existing styles intact */
+
+ul {
+  list-style: none;
 }
 
 a {
@@ -24,13 +21,11 @@ a {
 
 .visually-hidden {
   position: absolute;
-
   width: 1px;
   height: 1px;
   margin: -1px;
   border: 0;
   padding: 0;
-
   white-space: nowrap;
   clip-path: inset(100%);
   clip: rect(0 0 0 0);

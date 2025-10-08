@@ -8,15 +8,18 @@ Task: ${issue.title}
 Description: ${issue.body}
 
 Here are relevant code snippets from the repository:
-${relevantFiles
-        .map(f => `File: ${f.path}\n---\n${f.content}\n---`)
-        .join("\n\n")}
+${relevantFiles.map(f => `File: ${f.path}\n${f.content}`).join("\n\n")}
 
-Please suggest modifications for each file to solve the task.
-Return only a JSON array of objects. Each object must have:
-- "path": string — the file path to update
-- "content": string — full updated content of the file
-Do not include any text outside the JSON.
+
+
+Please suggest modifications for each file to solve the task. 
+Return the answer strictly in JSON format:
+[
+  {
+    "path": "<file path>",
+    "content": "<updated file content>"
+  }
+]
 You may add additional files if necessary.
 `;
 

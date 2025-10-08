@@ -1,5 +1,3 @@
-"use client";
-
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Link } from "react-scroll";
@@ -15,12 +13,12 @@ import nav from "@/data/nav.json";
 export function Nav() {
   const [showModal, setShowModal] = useState(false);
   return (
-    <>
+    <> 
       <MediaQuery maxWidth={767.9}>
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="  bg-transparent text-text-white text-button-font "
+          className="bg-transparent text-text-white text-button-font"
         >
           MENU
         </button>
@@ -43,7 +41,7 @@ export function Nav() {
                   smooth={true}
                   offset={50}
                   duration={500}
-                  className="bg-transparent text-text-white text-button-font cursor-pointer   "
+                  className="bg-blue-500 hover:bg-blue-700 focus:bg-blue-700 text-text-white text-button-font cursor-pointer" /* Change nav link button styles to blue */
                 >
                   {item}
                 </Link>
